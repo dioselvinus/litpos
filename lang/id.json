@@ -1,0 +1,7 @@
+{
+    "The :attribute must contain at least one letter.": ":attribute harus memiliki satu huruf.",
+    "The :attribute must contain at least one number.": ":attribute harus memiliki satu angka.",
+    "The :attribute must contain at least one symbol.": ":attribute harus memiliki satu simbol.",
+    "The :attribute must contain at least one uppercase and one lowercase letter.": ":attribute harus memiliki satu huruf besar dan satu huruf kecil.",
+    "The given :attribute has appeared in a data leak. Please choose a different :attribute.": ":attribute berada di kebocoran data. Silahkan pilih :attribute yang berbeda."
+}
