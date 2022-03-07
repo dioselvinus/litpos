@@ -14,10 +14,6 @@ use Inertia\Inertia;
 |
  */
 
-Route::get('/cashier', function () {
-    return Inertia::render('Cashier/Dashboard');
-});
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -25,6 +21,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified', 'role:cashier'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::get('/cashier', function () {
+        return Inertia::render('Cashier/Dashboard');
+    });
+});
