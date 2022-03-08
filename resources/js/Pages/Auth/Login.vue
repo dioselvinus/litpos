@@ -61,9 +61,8 @@
                 <span class="w-fit mx-auto">Log in</span>
             </jet-button>
         </form>
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <Link
-                v-if="canResetPassword"
                 :href="route('register')"
                 class="underline text-sm text-gray-600 hover:text-gray-900"
             >

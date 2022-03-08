@@ -12,7 +12,7 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('cashier.dashboard')">
                                     <jet-application-mark
                                         class="block h-9 w-auto"
                                     />
@@ -23,7 +23,7 @@
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
-                                <jet-dropdown align="right" width="48">
+                                <jet-dropdown align="right" width="150">
                                     <template #trigger>
                                         <button
                                             v-if="
@@ -105,7 +105,9 @@
                                                     "
                                                     :alt="$page.props.user.name"
                                                 />
-                                                {{ $page.props.user.name }}
+                                                <span class="truncate">
+                                                    {{ $page.props.user.name }}
+                                                </span>
                                                 <span
                                                     v-if="$page.props.user.name"
                                                     class="ml-8 h-4 w-4 bg-sky-400 rounded-full relative"

@@ -57,32 +57,7 @@
                     <div
                         class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
                     >
-                        <template
-                            v-for="product in products"
-                            :key="product.id"
-                            :value="product"
-                        >
-                            <div
-                                class="bg-white shadow-xl sm:rounded-lg w-48 h-48 relative overflow-hidden group"
-                                v-if="product.status == 'available'"
-                            >
-                                <img
-                                    :src="getImage(product.image)"
-                                    :alt="product.name"
-                                    class="object-cover h-full w-full"
-                                />
-                                <div
-                                    class="absolute w-full py-2.5 bottom-0 inset-x-0 bg-blue-400 text-white text-center leading-4 group-hover:hidden transition-all duration-300 ease-in-out"
-                                >
-                                    <h1 class="text-small">
-                                        {{ product.name }}
-                                    </h1>
-                                    <h3 class="text-xs">
-                                        {{ setPrice(product.price) }}
-                                    </h3>
-                                </div>
-                            </div>
-                        </template>
+                        <cashier-menu />
                     </div>
                 </div>
             </div>
@@ -103,18 +78,18 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayoutCashier.vue";
-import Welcome from "@/Jetstream/Welcome.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetButton from "@/Jetstream/Button.vue";
 import JetSelect from "@/Jetstream/Select.vue";
+import CashierMenu from "@/Pages/Cashier/Partials/Menus.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
-        Welcome,
         JetInput,
         JetButton,
         JetSelect,
+        CashierMenu,
     },
     data: () => {
         return {
@@ -128,16 +103,11 @@ export default defineComponent({
                     name: "Take Away",
                 },
             ],
-            products: null,
         };
     },
     mounted: function () {
         this.updateTime();
         setInterval(this.updateTime, 1000);
-        window.axios
-            .get(`api/products`)
-            .then((response) => (this.products = response.data))
-            .catch((error) => console.log(error));
     },
     methods: {
         updateTime: function () {
@@ -153,12 +123,6 @@ export default defineComponent({
             });
             this.$el.querySelector("#time").innerText = `${time} ${date}`;
         },
-        getImage: (url) => window._.replace(url, "public", "storage"),
-        setPrice: (price) =>
-            new Intl.NumberFormat(["ban", "id"], {
-                style: "currency",
-                currency: "IDR",
-            }).format(price),
     },
 });
 </script>

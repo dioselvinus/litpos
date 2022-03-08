@@ -18,10 +18,11 @@ Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
-
+Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+});
 Route::middleware(['auth:sanctum', 'verified', 'role:cashier'])->group(function () {
     Route::get('/cashier', function () {
         return Inertia::render('Cashier/Dashboard');
