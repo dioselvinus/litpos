@@ -99,15 +99,15 @@
             >
                 <span class="w-fit mx-auto">Register</span>
             </jet-button>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                <a
+                    :href="route('login')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900"
+                >
+                    Already registered?
+                </a>
+            </div>
         </form>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <Link
-                :href="route('login')"
-                class="underline text-sm text-gray-600 hover:text-gray-900"
-            >
-                Already registered?
-            </Link>
-        </div>
     </jet-authentication-card>
 </template>
 
@@ -120,7 +120,7 @@ import JetInput from "@/Jetstream/Input.vue";
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
     components: {
@@ -132,7 +132,6 @@ export default defineComponent({
         JetCheckbox,
         JetLabel,
         JetValidationErrors,
-        Link,
     },
 
     data() {
