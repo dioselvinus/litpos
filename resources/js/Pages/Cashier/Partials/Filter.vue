@@ -29,19 +29,11 @@
         <template #content>
             <div class="mt-4">
                 <jet-label>
-                    <jet-input
-                        type="checkbox"
-                        placeholder="Password"
-                        ref="password"
-                    />
+                    <jet-input type="checkbox" value="food" ref="food" :checked="foodSelected" />
                     <span class="font-semibold"> Makanan </span>
                 </jet-label>
                 <jet-label>
-                    <jet-input
-                        type="checkbox"
-                        placeholder="Password"
-                        ref="password"
-                    />
+                    <jet-input type="checkbox" ref="drink" value="drink" :checked="drinkSelected" />
                     <span class="font-semibold"> Minuman </span>
                 </jet-label>
 
@@ -86,9 +78,10 @@ export default defineComponent({
     data() {
         return {
             popupFilter: false,
+            drinkSelected: true,
+            foodSelected: true,
         };
     },
-
     methods: {
         confirmFilter() {
             this.popupFilter = true;

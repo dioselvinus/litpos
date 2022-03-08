@@ -23084,7 +23084,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      popupFilter: false
+      popupFilter: false,
+      drinkSelected: true,
+      foodSelected: true
     };
   },
   methods: {
@@ -27708,11 +27710,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
             type: "checkbox",
-            placeholder: "Password",
-            ref: "password"
-          }, null, 512
-          /* NEED_PATCH */
-          ), _hoisted_4];
+            value: "food",
+            ref: "food",
+            checked: _ctx.foodSelected
+          }, null, 8
+          /* PROPS */
+          , ["checked"]), _hoisted_4];
         }),
         _: 1
         /* STABLE */
@@ -27721,11 +27724,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
             type: "checkbox",
-            placeholder: "Password",
-            ref: "password"
-          }, null, 512
-          /* NEED_PATCH */
-          ), _hoisted_5];
+            ref: "drink",
+            value: "drink",
+            checked: _ctx.drinkSelected
+          }, null, 8
+          /* PROPS */
+          , ["checked"]), _hoisted_5];
         }),
         _: 1
         /* STABLE */
