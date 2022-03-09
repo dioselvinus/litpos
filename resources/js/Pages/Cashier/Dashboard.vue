@@ -32,7 +32,7 @@
                                 class="md:w-96 pl-10 p-2.5"
                             />
                         </div>
-                        <cashier-filter-menu />
+                        <cashier-filter-menu @clickFilter="onClickFilter" />
                     </div>
                     <span id="time" class="font-bold"></span>
                 </div>
@@ -40,7 +40,7 @@
                     <div
                         class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
                     >
-                        <cashier-menu />
+                        <cashier-menu v-bind:filter="filterMenu" />
                     </div>
                 </div>
             </div>
@@ -88,6 +88,7 @@ export default defineComponent({
                     name: "Take Away",
                 },
             ],
+            filterMenu: "all",
         };
     },
     mounted: function () {
@@ -95,6 +96,19 @@ export default defineComponent({
         setInterval(this.updateTime, 1000);
     },
     methods: {
+        onClickFilter: function (e) {
+            if (e.filterFood) {
+                this.filterMenu = "food";
+            } else if (e.filterDrink) {
+                this.filterMenu = "drink";
+            } else {
+                this.filterMenu = null;
+            }
+            if (e.filterFood && e.filterDrink) {
+                this.filterMenu = "all";
+            }
+            console.log(this.filterMenu, e);
+        },
         updateTime: function () {
             const now = new Date();
             const time = now.toLocaleTimeString(undefined, {

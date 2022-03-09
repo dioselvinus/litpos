@@ -29,11 +29,23 @@
         <template #content>
             <div class="mt-4">
                 <jet-label>
-                    <jet-input type="checkbox" value="food" ref="food" :checked="foodSelected" />
+                    <jet-input
+                        type="checkbox"
+                        value="food"
+                        ref="food"
+                        :checked="foodSelected"
+                        v-on:change="foodSelected = !foodSelected"
+                    />
                     <span class="font-semibold"> Makanan </span>
                 </jet-label>
                 <jet-label>
-                    <jet-input type="checkbox" ref="drink" value="drink" :checked="drinkSelected" />
+                    <jet-input
+                        type="checkbox"
+                        ref="drink"
+                        value="drink"
+                        :checked="drinkSelected"
+                        v-on:change="drinkSelected = !drinkSelected"
+                    />
                     <span class="font-semibold"> Minuman </span>
                 </jet-label>
 
@@ -82,12 +94,22 @@ export default defineComponent({
             foodSelected: true,
         };
     },
+    emits: {
+        clickFilter: {
+            filterFood: true,
+            filterDrink: true,
+        },
+    },
     methods: {
         confirmFilter() {
             this.popupFilter = true;
         },
 
         confirmingFilter() {
+            this.$emit("clickFilter", {
+                filterFood: this.foodSelected,
+                filterDrink: this.drinkSelected,
+            });
             this.closeModal();
         },
 

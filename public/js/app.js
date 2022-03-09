@@ -23018,7 +23018,8 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         id: 2,
         name: "Take Away"
-      }]
+      }],
+      filterMenu: "all"
     };
   },
   mounted: function mounted() {
@@ -23026,6 +23027,21 @@ __webpack_require__.r(__webpack_exports__);
     setInterval(this.updateTime, 1000);
   },
   methods: {
+    onClickFilter: function onClickFilter(e) {
+      if (e.filterFood) {
+        this.filterMenu = "food";
+      } else if (e.filterDrink) {
+        this.filterMenu = "drink";
+      } else {
+        this.filterMenu = null;
+      }
+
+      if (e.filterFood && e.filterDrink) {
+        this.filterMenu = "all";
+      }
+
+      console.log(this.filterMenu, e);
+    },
     updateTime: function updateTime() {
       var now = new Date();
       var time = now.toLocaleTimeString(undefined, {
@@ -23089,11 +23105,21 @@ __webpack_require__.r(__webpack_exports__);
       foodSelected: true
     };
   },
+  emits: {
+    clickFilter: {
+      filterFood: true,
+      filterDrink: true
+    }
+  },
   methods: {
     confirmFilter: function confirmFilter() {
       this.popupFilter = true;
     },
     confirmingFilter: function confirmingFilter() {
+      this.$emit("clickFilter", {
+        filterFood: this.foodSelected,
+        filterDrink: this.drinkSelected
+      });
       this.closeModal();
     },
     closeModal: function closeModal() {
@@ -23118,6 +23144,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  props: {
+    filter: String
+  },
   data: function data() {
     return {
       products: null,
@@ -27607,7 +27636,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         type: "text",
         placeholder: "search...",
         "class": "md:w-96 pl-10 p-2.5"
-      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cashier_filter_menu)]), _hoisted_7]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cashier_menu)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_select, {
+      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cashier_filter_menu, {
+        onClickFilter: _ctx.onClickFilter
+      }, null, 8
+      /* PROPS */
+      , ["onClickFilter"])]), _hoisted_7]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cashier_menu, {
+        filter: _ctx.filterMenu
+      }, null, 8
+      /* PROPS */
+      , ["filter"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_select, {
         options: _ctx.options
       }, null, 8
       /* PROPS */
@@ -27712,7 +27749,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             type: "checkbox",
             value: "food",
             ref: "food",
-            checked: _ctx.foodSelected
+            checked: _ctx.foodSelected,
+            onChange: _cache[0] || (_cache[0] = function ($event) {
+              return _ctx.foodSelected = !_ctx.foodSelected;
+            })
           }, null, 8
           /* PROPS */
           , ["checked"]), _hoisted_4];
@@ -27726,7 +27766,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             type: "checkbox",
             ref: "drink",
             value: "drink",
-            checked: _ctx.drinkSelected
+            checked: _ctx.drinkSelected,
+            onChange: _cache[1] || (_cache[1] = function ($event) {
+              return _ctx.drinkSelected = !_ctx.drinkSelected;
+            })
           }, null, 8
           /* PROPS */
           , ["checked"]), _hoisted_5];
@@ -27822,7 +27865,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.products, function (product) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: product.id
-    }, [product.status == 'available' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [product.status == 'available' && _ctx.filter != null && _ctx.filter == 'all' || _ctx.filter == product.category ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: _ctx.getImage(product.image),
       alt: product.name,
       "class": "object-cover h-full w-full"

@@ -5,7 +5,12 @@
         <template v-for="product in products" :key="product.id">
             <div
                 class="bg-white shadow-xl sm:rounded-lg w-48 h-48 relative overflow-hidden group"
-                v-if="product.status == 'available'"
+                v-if="
+                    (product.status == 'available' &&
+                        filter != null &&
+                        filter == 'all') ||
+                    filter == product.category
+                "
             >
                 <img
                     :src="getImage(product.image)"
@@ -29,6 +34,9 @@
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
+    props: {
+        filter: String,
+    },
     data: () => {
         return {
             products: null,
