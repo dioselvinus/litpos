@@ -2,7 +2,7 @@
     <template v-if="errored">unfortune</template>
     <template v-else>
         <template v-if="loading">product is loading...</template>
-        <template v-for="product in products" :key="product.id">
+        <template v-for="product in filteredProducts" :key="product.id">
             <div
                 class="bg-white shadow-xl sm:rounded-lg w-48 h-48 relative overflow-hidden group"
                 v-if="
@@ -36,6 +36,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
     props: {
         filter: String,
+        search: String,
     },
     data: () => {
         return {
@@ -52,10 +53,26 @@ export default defineComponent({
                 currency: "IDR",
             }).format(price),
     },
+    computed: {
+        filteredProducts: function () {
+            if (this.search == null || this.search == "") {
+                return this.products;
+            }
+
+            return this.products.filter(
+                (product) =>
+                    product.name
+                        .toLowerCase()
+                        .indexOf(this.search.toLowerCase()) > -1
+            );
+        },
+    },
     mounted() {
         window.axios
             .get(`api/products`)
-            .then((response) => (this.products = response.data))
+            .then((response) => {
+                this.products = response.data;
+            })
             .catch((error) => console.log(error))
             .finally(() => (this.loading = false));
     },

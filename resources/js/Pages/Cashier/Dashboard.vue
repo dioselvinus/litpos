@@ -26,7 +26,7 @@
                                 </svg>
                             </div>
                             <jet-input
-                                id="search"
+                                @input="setSearch($event)"
                                 type="text"
                                 placeholder="search..."
                                 class="md:w-96 pl-10 p-2.5"
@@ -40,7 +40,10 @@
                     <div
                         class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
                     >
-                        <cashier-menu v-bind:filter="filterMenu" />
+                        <cashier-menu
+                            v-bind:filter="filterMenu"
+                            v-bind:search="search"
+                        />
                     </div>
                 </div>
             </div>
@@ -89,6 +92,7 @@ export default defineComponent({
                 },
             ],
             filterMenu: "all",
+            search: null,
         };
     },
     mounted: function () {
@@ -96,6 +100,9 @@ export default defineComponent({
         setInterval(this.updateTime, 1000);
     },
     methods: {
+        setSearch: function (e) {
+            this.search = e.target.value;
+        },
         onClickFilter: function (e) {
             if (e.filterFood) {
                 this.filterMenu = "food";
@@ -107,7 +114,6 @@ export default defineComponent({
             if (e.filterFood && e.filterDrink) {
                 this.filterMenu = "all";
             }
-            console.log(this.filterMenu, e);
         },
         updateTime: function () {
             const now = new Date();
