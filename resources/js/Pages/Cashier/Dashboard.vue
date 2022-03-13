@@ -50,12 +50,14 @@
             <div class="min-h-screen bg-white col-span-1">
                 <div class="pt-6 pb-2 sm:px-2 lg:px-4">
                     <jet-select v-bind:options="options"></jet-select>
-                    <div class="mt-3 mb-2 h-[28rem] overflow-auto overflow_menu">
+                    <div
+                        class="mt-3 mb-2 h-[28rem] overflow-auto overflow_menu"
+                    >
                         <cashier-menu-selected />
                     </div>
-                    <jet-button class="w-full !p-5"
-                        >Charge Rp 10.000,00</jet-button
-                    >
+                    <jet-button class="w-full !p-4">
+                        Charge {{ setPrice(priceAll) }}
+                    </jet-button>
                 </div>
             </div>
         </div>
@@ -101,16 +103,40 @@ export default defineComponent({
             ],
             filterMenu: "all",
             search: null,
+            priceAll: 0,
         };
     },
     mounted: function () {
         this.updateTime();
         setInterval(this.updateTime, 1000);
+        this.getChargePrice();
+        setInterval(this.getChargePrice, 500);
     },
     methods: {
+        getChargePrice: function () {
+            let basket = window.sessionStorage.getItem("basket")
+                ? JSON.parse(window.sessionStorage.getItem("basket"))
+                : [];
+            if (basket) {
+                this.priceAll = 0;
+                window._.forEach(basket, (item) => {
+                    this.priceAll +=
+                        window._.toInteger(item.product.price) *
+                        window._.toInteger(item.quantity);
+                });
+            }
+        },
+
         setSearch: function (e) {
             this.search = e.target.value;
         },
+
+        setPrice: (price) =>
+            new Intl.NumberFormat(["ban", "id"], {
+                style: "currency",
+                currency: "IDR",
+            }).format(price),
+
         onClickFilter: function (e) {
             if (e.filterFood) {
                 this.filterMenu = "food";
@@ -123,6 +149,7 @@ export default defineComponent({
                 this.filterMenu = "all";
             }
         },
+
         updateTime: function () {
             const now = new Date();
             const time = now.toLocaleTimeString(undefined, {

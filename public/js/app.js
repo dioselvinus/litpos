@@ -23023,16 +23023,38 @@ __webpack_require__.r(__webpack_exports__);
         name: "Take Away"
       }],
       filterMenu: "all",
-      search: null
+      search: null,
+      priceAll: 0
     };
   },
   mounted: function mounted() {
     this.updateTime();
     setInterval(this.updateTime, 1000);
+    this.getChargePrice();
+    setInterval(this.getChargePrice, 500);
   },
   methods: {
+    getChargePrice: function getChargePrice() {
+      var _this = this;
+
+      var basket = window.sessionStorage.getItem("basket") ? JSON.parse(window.sessionStorage.getItem("basket")) : [];
+
+      if (basket) {
+        this.priceAll = 0;
+
+        window._.forEach(basket, function (item) {
+          _this.priceAll += window._.toInteger(item.product.price) * window._.toInteger(item.quantity);
+        });
+      }
+    },
     setSearch: function setSearch(e) {
       this.search = e.target.value;
+    },
+    setPrice: function setPrice(price) {
+      return new Intl.NumberFormat(["ban", "id"], {
+        style: "currency",
+        currency: "IDR"
+      }).format(price);
     },
     onClickFilter: function onClickFilter(e) {
       if (e.filterFood) {
@@ -27737,9 +27759,6 @@ var _hoisted_11 = {
 var _hoisted_12 = {
   "class": "mt-3 mb-2 h-[28rem] overflow-auto overflow_menu"
 };
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Charge Rp 10.000,00");
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
 
@@ -27781,10 +27800,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cashier_menu_selected)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-        "class": "w-full !p-5"
+        "class": "w-full !p-4"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Charge " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.setPrice(_ctx.priceAll)), 1
+          /* TEXT */
+          )];
         }),
         _: 1
         /* STABLE */
