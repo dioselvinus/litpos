@@ -4,13 +4,14 @@
         <template v-if="loading">product is loading...</template>
         <template v-for="product in filteredProducts" :key="product.id">
             <div
-                class="bg-white shadow-xl sm:rounded-lg w-48 h-48 relative overflow-hidden group"
+                class="bg-white shadow-xl cursor-pointer sm:rounded-lg w-48 h-48 relative overflow-hidden group"
                 v-if="
                     (product.status == 'available' &&
                         filter != null &&
                         filter == 'all') ||
                     filter == product.category
                 "
+                v-on:click="selectMenu(product.id)"
             >
                 <img
                     :src="getImage(product.image)"
@@ -52,6 +53,29 @@ export default defineComponent({
                 style: "currency",
                 currency: "IDR",
             }).format(price),
+
+        selectMenu: function (id) {
+            // get basket from session storage if basket is empty, create new basket else, add product to basket
+            let basket = window.sessionStorage.getItem("basket");
+            if (basket == null) {
+                basket = {};
+            } else {
+                basket = JSON.parse(basket);
+            }
+
+            if (basket[id] == null) {
+                basket[id] = {
+                    product: this.products.find((product) => product.id == id),
+                    quantity: 1,
+                };
+            } else {
+                basket[id] = {
+                    product: this.products.find((product) => product.id == id),
+                    quantity: basket[id].quantity + 1,
+                };
+            }
+            window.sessionStorage.setItem("basket", JSON.stringify(basket));
+        },
     },
     computed: {
         filteredProducts: function () {

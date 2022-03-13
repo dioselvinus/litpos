@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductBasketController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,4 +29,17 @@ Route::middleware(['auth:sanctum', 'verified', 'role:cashier'])->group(function 
     Route::get('/cashier', function () {
         return Inertia::render('Cashier/Dashboard');
     })->name('cashier.dashboard');
+});
+
+/**
+ * This is a temporary solution for api until i have a proper solution.
+ * this solution is not good because it is not microservice.
+ */
+Route::prefix('api')->group(function () {
+    Route::middleware(['auth:sanctum', 'verified', 'role:manager|cashier'])->group(function () {
+        Route::apiResource('products', ProductController::class);
+    });
+    Route::middleware(['auth:sanctum', 'verified', 'role:cashier'])->group(function () {
+        Route::apiResource('basket', ProductBasketController::class);
+    });
 });

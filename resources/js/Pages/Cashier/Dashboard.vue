@@ -50,6 +50,12 @@
             <div class="min-h-screen bg-white col-span-1">
                 <div class="pt-6 pb-2 sm:px-2 lg:px-4">
                     <jet-select v-bind:options="options"></jet-select>
+                    <div class="pt-6 h-[28rem] overflow-hidden">
+                        <cashier-menu-selected />
+                    </div>
+                    <jet-button class="w-full !p-5"
+                        >Charge Rp 10.000,00</jet-button
+                    >
                 </div>
             </div>
         </div>
@@ -69,6 +75,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import JetSelect from "@/Jetstream/Select.vue";
 import CashierMenu from "@/Pages/Cashier/Partials/Menus.vue";
 import CashierFilterMenu from "@/Pages/Cashier/Partials/Filter.vue";
+import CashierMenuSelected from "@/Pages/Cashier/Partials/MenuSelected.vue";
 
 export default defineComponent({
     components: {
@@ -78,6 +85,7 @@ export default defineComponent({
         JetSelect,
         CashierMenu,
         CashierFilterMenu,
+        CashierMenuSelected,
     },
     data: () => {
         return {
