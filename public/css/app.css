@@ -1355,14 +1355,8 @@ input:checked + .toggle-bg {
 .z-10 {
   z-index: 10;
 }
-.-z-50 {
-  z-index: -50;
-}
 .z-20 {
   z-index: 20;
-}
-.-z-20 {
-  z-index: -20;
 }
 .col-span-6 {
   grid-column: span 6 / span 6;
@@ -1601,9 +1595,6 @@ input:checked + .toggle-bg {
 .w-1\/2 {
   width: 50%;
 }
-.w-2 {
-  width: 0.5rem;
-}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1705,9 +1696,6 @@ input:checked + .toggle-bg {
 }
 .list-disc {
   list-style-type: disc;
-}
-.grid-flow-col {
-  grid-auto-flow: column;
 }
 .grid-flow-col-dense {
   grid-auto-flow: column dense;
@@ -2460,10 +2448,6 @@ input:checked + .toggle-bg {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-.hover\:brightness-50:hover {
-  --tw-brightness: brightness(.5);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .focus\:z-10:focus {
   z-index: 10;

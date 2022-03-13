@@ -27723,8 +27723,7 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_8 = {
-  "class": "overflow-auto h-screen pb-40",
-  id: "menu_overflow"
+  "class": "overflow-auto h-screen pb-40 overflow_menu"
 };
 var _hoisted_9 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
@@ -27736,7 +27735,7 @@ var _hoisted_11 = {
   "class": "pt-6 pb-2 sm:px-2 lg:px-4"
 };
 var _hoisted_12 = {
-  "class": "pt-6 h-[28rem] overflow-hidden"
+  "class": "mt-3 mb-2 h-[28rem] overflow-auto overflow_menu"
 };
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Charge Rp 10.000,00");
@@ -29597,7 +29596,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#menu_overflow[data-v-79bc2fcf]::-webkit-scrollbar {\r\n    display: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.overflow_menu[data-v-79bc2fcf]::-webkit-scrollbar {\r\n    display: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

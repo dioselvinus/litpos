@@ -36,7 +36,7 @@
                     </div>
                     <span id="time" class="font-bold"></span>
                 </div>
-                <div class="overflow-auto h-screen pb-40" id="menu_overflow">
+                <div class="overflow-auto h-screen pb-40 overflow_menu">
                     <div
                         class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
                     >
@@ -50,7 +50,7 @@
             <div class="min-h-screen bg-white col-span-1">
                 <div class="pt-6 pb-2 sm:px-2 lg:px-4">
                     <jet-select v-bind:options="options"></jet-select>
-                    <div class="pt-6 h-[28rem] overflow-hidden">
+                    <div class="mt-3 mb-2 h-[28rem] overflow-auto overflow_menu">
                         <cashier-menu-selected />
                     </div>
                     <jet-button class="w-full !p-5"
@@ -62,7 +62,7 @@
     </app-layout>
 </template>
 <style scoped>
-#menu_overflow::-webkit-scrollbar {
+.overflow_menu::-webkit-scrollbar {
     display: none;
 }
 </style>
