@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -14,6 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        Log::info('get all products from database');
         return response()->json(Product::latest()->get());
     }
 
@@ -38,10 +40,12 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         if (!$product) {
+            Log::info('product not found');
             return response()->json([
                 'message' => 'Product not found',
             ], 404);
         }
+        Log::info('get product by id');
         return response()->json($product);
     }
 
