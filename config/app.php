@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
+        MarvinLabs\DiscordLogger\ServiceProvider::class,
 
         /*
          * Application Service Providers...
