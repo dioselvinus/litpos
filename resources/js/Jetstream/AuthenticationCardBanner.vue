@@ -1,63 +1,49 @@
 <template>
-    <div
-        id="default-carousel"
-        data-carousel="slide"
-        class="relative col-span-2"
-    >
+    <div id="default-carousel" data-carousel="slide">
         <div class="overflow-hidden h-screen relative">
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 object-cover"
                 data-carousel-item="active"
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform"
+                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform"
+                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
         </div>
 
