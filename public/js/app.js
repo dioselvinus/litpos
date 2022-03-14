@@ -24115,10 +24115,10 @@ var _hoisted_2 = {
   "class": "lg:hidden w-56 block py-10 mx-auto"
 };
 var _hoisted_3 = {
-  "class": "mx-auto w-full sm:max-w-md lg:max-w-none px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg relative"
+  "class": "mx-auto w-full sm:max-w-md lg:max-w-none bg-white shadow-md overflow-hidden sm:rounded-lg relative mb-8 lg:mb-0"
 };
 var _hoisted_4 = {
-  "class": "h-screen px-6 py-4"
+  "class": "lg:h-screen px-6 py-4"
 };
 var _hoisted_5 = {
   "class": "hidden lg:block py-10"
@@ -24153,8 +24153,9 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"overflow-hidden h-screen relative\"><div class=\"duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 object-cover\" data-carousel-item=\"active\"><span class=\"block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url(&#39;https://source.unsplash.com/random/900x700/?market&#39;)] bg-no-repeat bg-cover\"></span></div><div class=\"duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full object-cover\" data-carousel-item=\"\"><span class=\"block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url(&#39;https://source.unsplash.com/random/900x700/?market&#39;)] bg-no-repeat bg-cover\"></span></div><div class=\"hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover\" data-carousel-item=\"\"><span class=\"block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url(&#39;https://source.unsplash.com/random/900x700/?market&#39;)] bg-no-repeat bg-cover\"></span></div><div class=\"hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover\" data-carousel-item=\"\"><span class=\"block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url(&#39;https://source.unsplash.com/random/900x700/?market&#39;)] bg-no-repeat bg-cover\"></span></div><div class=\"duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full object-cover\" data-carousel-item=\"\"><span class=\"block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url(&#39;https://source.unsplash.com/random/900x700/?market&#39;)] bg-no-repeat bg-cover\"></span></div></div><div class=\"flex absolute bottom-5 left-1/2 space-x-3 -translate-x-1/2\"><button type=\"button\" class=\"w-3 h-3 rounded-full bg-white dark:bg-gray-800\" aria-current=\"true\" aria-label=\"Slide 1\" data-carousel-slide-to=\"0\"></button><button type=\"button\" class=\"w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800\" aria-current=\"false\" aria-label=\"Slide 2\" data-carousel-slide-to=\"1\"></button><button type=\"button\" class=\"w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800\" aria-current=\"false\" aria-label=\"Slide 3\" data-carousel-slide-to=\"2\"></button><button type=\"button\" class=\"w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800\" aria-current=\"false\" aria-label=\"Slide 4\" data-carousel-slide-to=\"3\"></button><button type=\"button\" class=\"w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800\" aria-current=\"false\" aria-label=\"Slide 5\" data-carousel-slide-to=\"4\"></button></div>", 2);
 
+var _hoisted_4 = [_hoisted_2];
 function render(_ctx, _cache) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button\r\n                type=\"button\"\r\n                class=\"flex absolute top-0 left-0 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none\"\r\n                data-carousel-prev=\"\"\r\n            >\r\n                <span\r\n                    class=\"inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none\"\r\n                >\r\n                    <svg\r\n                        class=\"w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800\"\r\n                        fill=\"none\"\r\n                        stroke=\"currentColor\"\r\n                        viewBox=\"0 0 24 24\"\r\n                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                    >\r\n                        <path\r\n                            stroke-linecap=\"round\"\r\n                            stroke-linejoin=\"round\"\r\n                            stroke-width=\"2\"\r\n                            d=\"M15 19l-7-7 7-7\"\r\n                        ></path>\r\n                    </svg>\r\n                    <span class=\"hidden\">Previous</span>\r\n                </span>\r\n            </button>\r\n            <button\r\n                type=\"button\"\r\n                class=\"flex absolute top-0 right-0 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none\"\r\n                data-carousel-next=\"\"\r\n            >\r\n                <span\r\n                    class=\"inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none\"\r\n                >\r\n                    <svg\r\n                        class=\"w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800\"\r\n                        fill=\"none\"\r\n                        stroke=\"currentColor\"\r\n                        viewBox=\"0 0 24 24\"\r\n                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                    >\r\n                        <path\r\n                            stroke-linecap=\"round\"\r\n                            stroke-linejoin=\"round\"\r\n                            stroke-width=\"2\"\r\n                            d=\"M9 5l7 7-7 7\"\r\n                        ></path>\r\n                    </svg>\r\n                    <span class=\"hidden\">Next</span>\r\n                </span>\r\n            </button> ")]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_4);
 }
 
 /***/ }),
@@ -27001,7 +27002,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = {
-  "class": "absolute bottom-8 left-1/2 transform -translate-x-1/2"
+  "class": "lg:absolute lg:bottom-8 lg:left-1/2 transform lg:-translate-x-1/2 mx-auto text-center mt-8"
 };
 var _hoisted_9 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -27161,7 +27162,7 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_12 = {
-  "class": "absolute bottom-8 left-1/2 transform -translate-x-1/2"
+  "class": "lg:absolute lg:bottom-8 lg:left-1/2 transform lg:-translate-x-1/2 mx-auto text-center mt-8"
 };
 var _hoisted_13 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {

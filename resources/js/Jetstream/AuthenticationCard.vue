@@ -6,9 +6,9 @@
             <slot name="logo" />
         </div>
         <div
-            class="mx-auto w-full sm:max-w-md lg:max-w-none px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg relative"
+            class="mx-auto w-full sm:max-w-md lg:max-w-none bg-white shadow-md overflow-hidden sm:rounded-lg relative mb-8 lg:mb-0"
         >
-            <div class="h-screen px-6 py-4">
+            <div class="lg:h-screen px-6 py-4">
                 <div class="hidden lg:block py-10">
                     <slot name="logo" />
                 </div>
