@@ -4,7 +4,7 @@
         <template v-if="loading">product is loading...</template>
         <template v-for="product in filteredProducts" :key="product.id">
             <div
-                class="bg-white shadow-xl cursor-pointer sm:rounded-lg w-48 h-48 relative overflow-hidden group"
+                class="bg-white shadow-xl cursor-pointer rounded-lg w-48 h-48 relative overflow-hidden group"
                 v-if="
                     (product.status == 'available' &&
                         filter != null &&

@@ -1,9 +1,9 @@
 <template>
-    <app-layout title="Dashboard" class="max-h-screen overflow-hidden">
-        <div class="grid grid-cols-3 md:grid-cols-5">
-            <div class="col-span-2 md:col-span-4">
+    <app-layout title="Dashboard" class="max-h-screen md:overflow-hidden">
+        <div class="md:flex md:flex-row">
+            <div>
                 <div
-                    class="pt-6 pb-2 sm:px-6 lg:px-8 flex justify-between items-center"
+                    class="mx-auto pt-6 pb-2 px-6 lg:px-8 flex justify-between items-center"
                 >
                     <div class="flex">
                         <div class="relative">
@@ -29,16 +29,17 @@
                                 @input="setSearch($event)"
                                 type="text"
                                 placeholder="search..."
-                                class="md:w-96 pl-10 p-2.5"
+                                class="w-20 sm:w-56 lg:w-96 pl-10 p-2.5"
                             />
                         </div>
+                        <cashier-filter-menu @clickFilter="onClickFilter" />
                         <cashier-filter-menu @clickFilter="onClickFilter" />
                     </div>
                     <span id="time" class="font-bold"></span>
                 </div>
-                <div class="overflow-auto h-screen pb-40 overflow_menu">
+                <div class="md:overflow-auto h-screen pb-40 overflow_menu">
                     <div
-                        class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-5 gap-5"
+                        class="w-fit px-6 lg:px-8 flex flex-wrap gap-4 md:gap-1 lg:gap-4"
                     >
                         <cashier-menu
                             v-bind:filter="filterMenu"
@@ -47,11 +48,14 @@
                     </div>
                 </div>
             </div>
-            <div class="min-h-screen bg-white col-span-1">
-                <div class="pt-6 pb-2 sm:px-2 lg:px-4">
+
+            <div class="min-h-screen min-w-max bg-white hidden md:block">
+                <div
+                    class="py-6 sm:px-2 lg:px-4 min-w-max h-[calc(100vh-4rem)] flex flex-col justify-between"
+                >
                     <jet-select v-bind:options="options"></jet-select>
                     <div
-                        class="mt-3 mb-2 h-[28rem] overflow-auto overflow_menu"
+                        class="mt-3 mb-2 overflow-auto overflow_menu w-[20rem] h-screen"
                     >
                         <cashier-menu-selected />
                     </div>
