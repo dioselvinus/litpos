@@ -12,7 +12,7 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('cashier.dashboard')">
+                                <Link :href="route('dashboard')">
                                     <jet-application-mark
                                         class="block h-9 w-auto"
                                     />

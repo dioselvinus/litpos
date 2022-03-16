@@ -20,15 +20,10 @@ Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
 
-Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified','role:manager|admin|cashier'])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard/Main');
     })->name('dashboard');
-});
-Route::middleware(['auth:sanctum', 'verified', 'role:cashier'])->group(function () {
-    Route::get('/cashier', function () {
-        return Inertia::render('Cashier/Dashboard');
-    })->name('cashier.dashboard');
 });
 
 /**
