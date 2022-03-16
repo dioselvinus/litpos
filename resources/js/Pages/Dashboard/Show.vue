@@ -111,6 +111,154 @@
                     </div>
                 </div>
             </div>
+            <div class="pt-20">
+                <div class="flex justify-between items-center py-3">
+                    <span
+                        class="font-bold text-xl flex items-center gap-3 ml-1"
+                    >
+                        <svg viewBox="0 0 24 24" class="h-6 w-6 inline-block">
+                            <path
+                                fill="currentColor"
+                                d="M11,2V22C5.9,21.5 2,17.2 2,12C2,6.8 5.9,2.5 11,2M13,2V11H22C21.5,6.2 17.8,2.5 13,2M13,13V22C17.7,21.5 21.5,17.8 22,13H13Z"
+                            ></path>
+                        </svg>
+                        Cashier Performance
+                    </span>
+                </div>
+                <div class="flex flex-col">
+                    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                        <div class="inline-block min-w-full align-middle">
+                            <div class="overflow-hidden">
+                                <table
+                                    class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700"
+                                >
+                                    <thead class="bg-gray-100 dark:bg-gray-700">
+                                        <tr>
+                                            <th
+                                                scope="col"
+                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                                            >
+                                                Cashier Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                                            >
+                                                Graph Income
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                                            >
+                                                balance income
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
+                                    >
+                                        <tr
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                Apple Imac 27"
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+                                            >
+                                                Desktop PC
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                $1999
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                Apple MacBook Pro 17"
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+                                            >
+                                                Laptop
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                $2999
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                iPhone 13 Pro
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+                                            >
+                                                Phone
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                $999
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                Apple Magic Mouse 2
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+                                            >
+                                                Accessories
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                $99
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                Apple Watch Series 7
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+                                            >
+                                                Accessories
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                $599
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </app-layout>
 </template>
@@ -135,7 +283,7 @@ export default defineComponent({
         VueApexCharts,
         JetSelect,
         Finance,
-        FinanceOverview
+        FinanceOverview,
     },
     data: () => {
         const chartOptionsBase = {
