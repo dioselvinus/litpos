@@ -258,13 +258,12 @@
             </nav>
 
             <!-- Page Heading -->
-            <header class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8" v-if="$slots.header||$slots.breadcrumbs">
-                <nav class="flex py-3 px-5 mb-6 text-gray-700 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb" v-if="$slots.breadcrumbs">
+            <header class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8" v-if="$slots.breadcrumbs">
+                <nav class="flex py-3 px-5 text-gray-700 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb" v-if="$slots.breadcrumbs">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <slot name="breadcrumbs"></slot>
                     </ol>
                 </nav>
-                <slot name="header"></slot>
             </header>
 
             <!-- Page Content -->

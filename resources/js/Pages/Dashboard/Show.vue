@@ -19,35 +19,96 @@
                 </div>
             </li>
         </template>
-        <template #header>
-            <jet-select v-bind:options="selectOption" class="w-36"></jet-select>
-        </template>
-
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
-            <div class="flex justify-between gap-4">
-                <div class="min-w-min w-96 bg-white shadow rounded">
-                    <vue-apex-charts
-                        :options="chartOptions"
-                        :series="series"
-                    ></vue-apex-charts>
+            <div>
+                <div class="flex justify-between items-center py-3">
+                    <span
+                        class="font-bold text-xl flex items-center gap-3 ml-1"
+                    >
+                        <svg viewBox="0 0 24 24" class="h-6 w-6 inline-block">
+                            <path
+                                fill="currentColor"
+                                d="M6,16.5L3,19.44V11H6M11,14.66L9.43,13.32L8,14.64V7H11M16,13L13,16V3H16M18.81,12.81L17,11H22V16L20.21,14.21L13,21.36L9.53,18.34L5.75,22H3L9.47,15.66L13,18.64"
+                            ></path>
+                        </svg>
+                        Overview
+                    </span>
+                    <jet-select
+                        v-bind:options="selectOption"
+                        class="w-36"
+                    ></jet-select>
                 </div>
-                <div class="min-w-min w-96 bg-white shadow rounded">
-                    <vue-apex-charts
-                        :options="chartOptions"
-                        :series="series"
-                    ></vue-apex-charts>
+                <div class="flex justify-between gap-4">
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <vue-apex-charts
+                            :options="chartOptions"
+                            :series="series"
+                        ></vue-apex-charts>
+                    </div>
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <vue-apex-charts
+                            :options="chartOptions"
+                            :series="series"
+                        ></vue-apex-charts>
+                    </div>
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <vue-apex-charts
+                            :options="chartOptions"
+                            :series="series"
+                        ></vue-apex-charts>
+                    </div>
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <vue-apex-charts
+                            :options="chartOptions"
+                            :series="series"
+                        ></vue-apex-charts>
+                    </div>
                 </div>
-                <div class="min-w-min w-96 bg-white shadow rounded">
-                    <vue-apex-charts
-                        :options="chartOptions"
-                        :series="series"
-                    ></vue-apex-charts>
-                </div>
-                <div class="min-w-min w-96 bg-white shadow rounded">
-                    <vue-apex-charts
-                        :options="chartOptions"
-                        :series="series"
-                    ></vue-apex-charts>
+            </div>
+            <div class="pt-36">
+                <div class="flex gap-5">
+                    <div class="w-full">
+                        <div class="flex justify-between items-center py-3">
+                            <span
+                                class="font-bold text-xl flex items-center gap-3 ml-1"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="h-6 w-6 inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M3,14L3.5,14.07L8.07,9.5C7.89,8.85 8.06,8.11 8.59,7.59C9.37,6.8 10.63,6.8 11.41,7.59C11.94,8.11 12.11,8.85 11.93,9.5L14.5,12.07L15,12C15.18,12 15.35,12 15.5,12.07L19.07,8.5C19,8.35 19,8.18 19,8A2,2 0 0,1 21,6A2,2 0 0,1 23,8A2,2 0 0,1 21,10C20.82,10 20.65,10 20.5,9.93L16.93,13.5C17,13.65 17,13.82 17,14A2,2 0 0,1 15,16A2,2 0 0,1 13,14L13.07,13.5L10.5,10.93C10.18,11 9.82,11 9.5,10.93L4.93,15.5L5,16A2,2 0 0,1 3,18A2,2 0 0,1 1,16A2,2 0 0,1 3,14Z"
+                                    ></path>
+                                </svg>
+                                Finance
+                            </span>
+                        </div>
+                        <finance />
+                        <finance />
+                        <finance />
+                    </div>
+                    <div class="w-[50rem]">
+                        <div class="flex justify-between items-center p-3">
+                            <span
+                                class="font-bold text-xl flex items-center gap-3 ml-1"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="h-6 w-6 inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M6,16.5L3,19.44V11H6M11,14.66L9.43,13.32L8,14.64V7H11M16,13L13,16V3H16M18.81,12.81L17,11H22V16L20.21,14.21L13,21.36L9.53,18.34L5.75,22H3L9.47,15.66L13,18.64"
+                                    ></path>
+                                </svg>
+                                overview
+                            </span>
+                        </div>
+                        <finance-overview />
+                        <finance-overview />
+                        <finance-overview />
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,12 +126,16 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
 import JetSelect from "@/Jetstream/Select.vue";
+import Finance from "@/Pages/Dashboard/Partials/Finance.vue";
+import FinanceOverview from "@/Pages/Dashboard/Partials/FinanceOverview.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
         VueApexCharts,
         JetSelect,
+        Finance,
+        FinanceOverview
     },
     data: () => {
         const chartOptionsBase = {
