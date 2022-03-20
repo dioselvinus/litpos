@@ -23,7 +23,7 @@ Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
 
-Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Main');
     })->name('dashboard');
