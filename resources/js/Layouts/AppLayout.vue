@@ -22,7 +22,7 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('cashier')" :active="route().current('cashier')"  v-if="$page.props.user.roles && ($page.props.user.roles[0].name === 'manager' || $page.props.user.roles[0].name === 'admin')">
+                                <jet-nav-link :href="route('cashier')" :active="route().current('cashier')"  v-if="$page.props.user.roles[0].name === 'manager' || $page.props.user.roles[0].name === 'admin'">
                                     Cashier
                                 </jet-nav-link>
                             </div>

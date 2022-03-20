@@ -1,9 +1,8 @@
 <template>
-    <template v-if="$page.props.user.roles">
-        <show-cashier v-if="$page.props.user.roles[0].name === 'cashier'" />
-        <show-manager-admin v-else />
-    </template>
-    <app-layout title="Dashboard" v-else>
+    <app-layout
+        title="Dashboard"
+        v-if="$page.props.user.roles[0].name === 'user'"
+    >
         <template #breadcrumbs>
             <li class="inline-flex items-center">
                 <div
@@ -28,10 +27,12 @@
         >
             <h1 class="text-2xl font-bold text-center">
                 403 | Kamu harus menghubungi manager atau admin agar diberikan
-                wewenang
+                wewenang.
             </h1>
         </div>
     </app-layout>
+    <show-cashier v-else-if="$page.props.user.roles[0].name === 'cashier'" />
+    <show-manager-admin v-else />
 </template>
 
 <script>
