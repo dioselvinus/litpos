@@ -47,7 +47,10 @@
                         :href="route('cashier.pdf')"
                         class="hover:!border-transparent focus:!border-transparent !p-0"
                     >
-                        <jet-secondary-button type="button" class="focus:!ring-0 rounded-r-none">
+                        <jet-secondary-button
+                            type="button"
+                            class="focus:!ring-0 rounded-r-none"
+                        >
                             Download
                         </jet-secondary-button>
                     </jet-nav-link>
@@ -77,10 +80,16 @@
                                 Download As
                             </div>
 
-                            <jet-dropdown-link :href="route('cashier.pdf')">
+                            <jet-dropdown-link
+                                :href="route('cashier.pdf')"
+                                as="a"
+                            >
                                 PDF
                             </jet-dropdown-link>
-                            <jet-dropdown-link :href="route('cashier.pdf')">
+                            <jet-dropdown-link
+                                :href="route('cashier.excel')"
+                                as="a"
+                            >
                                 EXCEL
                             </jet-dropdown-link>
                         </template>

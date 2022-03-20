@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,22 +22,29 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
-Route::get('/cashier/pdf', function () {
-    // return $pdf->download('cashier.pdf');
-    // stream
-    return PDF::loadView('pdf.table.cashier', ['users' => user::role('cashier')->get()])->download(Carbon\Carbon::now() . '_Cashier.pdf');
-    // return $html;
-
-})->name('cashier.pdf');
 
 Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Main');
     })->name('dashboard');
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
-        Route::get('/cashier', function () {
-            return Inertia::render('Cashier/Show');
-        })->name('cashier');
+        Route::prefix('/cashier')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('Cashier/Show');
+            })->name('cashier');
+            Route::get('/pdf', function () {
+                return PDF::loadView('pdf.table.cashier', ['users' => user::role('cashier')->get()])->download(Carbon\Carbon::now() . '_Cashier.pdf');
+            })->name('cashier.pdf');
+            Route::get('/excel', function () {
+                $collection = user::role('cashier')->get(['name', 'email', 'email_verified_at'])->toArray();
+                $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_Cashier.xlsx');
+                foreach ($collection as $row) {
+                    unset($row['profile_photo_url']);
+                    $excel->addRow($row);
+                }
+                return $excel->toBrowser();
+            })->name('cashier.excel');
+        });
     });
 });
 
