@@ -53,13 +53,16 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier|user'
                 return Inertia::render('Product/Show');
             })->name('product');
             Route::get('/pdf', function () {
-                return PDF::loadView('pdf.table.product', ['products' => ProductController::getAll()])->download(Carbon\Carbon::now() . '_Product.pdf');
+                return PDF::loadView('pdf.table.product', ['products' => Product::all()])->download(Carbon\Carbon::now() . '_Product.pdf');
             })->name('product.pdf');
             Route::get('/excel', function () {
-                $collection = ProductController::getAll()->toArray();
+                $collection = Product::get(['name', 'category', 'price', 'status', 'created_at', 'updated_at'])->toArray();
                 $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_Product.xlsx');
                 foreach ($collection as $row) {
-                    unset($row['photo_url']);
+                    if ($row['price']) {
+                        $row['price'] = number_format($row['price'], 2, ',', '.');
+                    }
+
                     $excel->addRow($row);
                 }
                 return $excel->toBrowser();

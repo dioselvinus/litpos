@@ -44,7 +44,7 @@
             <div class="mb-2">
                 <div class="inline-flex" role="group">
                     <jet-nav-link
-                        :href="route('cashier.pdf')"
+                        :href="route('product.pdf')"
                         class="hover:!border-transparent focus:!border-transparent !p-0"
                     >
                         <jet-secondary-button
@@ -81,13 +81,13 @@
                             </div>
 
                             <jet-dropdown-link
-                                :href="route('cashier.pdf')"
+                                :href="route('product.pdf')"
                                 as="a"
                             >
                                 PDF
                             </jet-dropdown-link>
                             <jet-dropdown-link
-                                :href="route('cashier.excel')"
+                                :href="route('product.excel')"
                                 as="a"
                             >
                                 EXCEL
