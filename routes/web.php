@@ -20,6 +20,8 @@ use Spatie\SimpleExcel\SimpleExcelWriter;
 |
  */
 
+require __DIR__ . '\jetstream.php';
+
 Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
@@ -62,6 +64,15 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier|user'
                 }
                 return $excel->toBrowser();
             })->name('product.excel');
+
+            Route::get('/create', function () {
+                return Inertia::render('Product/Create');
+            })->name('product.create');
+            Route::get('/{product}/edit', function (Product $product) {
+                return Inertia::render('Product/Edit', [
+                    'product' => $product,
+                ]);
+            })->name('product.edit');
         });
     });
 });
