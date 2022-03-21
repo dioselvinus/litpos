@@ -76,7 +76,8 @@ export default defineComponent({
                 ? JSON.parse(window.sessionStorage.getItem("basket"))
                 : [];
         },
-        getImage: (url) => window._.replace(url, "public", "storage"),
+        getImage: (url) =>
+            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
         setPrice: (price) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",

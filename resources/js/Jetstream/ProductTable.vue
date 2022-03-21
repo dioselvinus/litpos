@@ -35,7 +35,7 @@
             <table-body>
                 <div class="space-x-2">
                     <jet-nav-link
-                        :href="`/products/${row.id}/edit`"
+                        :href="`/product/${row.id}/edit`"
                         as="a"
                         class="hover:!border-transparent focus:!border-transparent !p-0"
                     >
@@ -94,8 +94,7 @@ export default defineComponent({
             };
             isLoading.value = false;
         };
-
-        const getImage = (url) => window._.replace(url, "public", "storage");
+        const getImage = (url) => window._.replace(url, /(^public\/images)/gm, "/storage/images");
         const setPrice = (price) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",

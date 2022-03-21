@@ -11,7 +11,7 @@
             <ListboxButton
                 class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-md"
             >
-                <span class="block truncate">{{ selected.name }}</span>
+                <span class="block truncate">{{ selected }}</span>
                 <span
                     class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
                 >
@@ -34,7 +34,7 @@
                     <ListboxOption
                         as="template"
                         v-for="data in options"
-                        :key="data.id"
+                        :key="data"
                         :value="data"
                         v-slot="{ active, selected }"
                     >
@@ -52,7 +52,7 @@
                                     'ml-3 block truncate',
                                 ]"
                             >
-                                {{ data.name }}
+                                {{ data }}
                             </span>
                         </li>
                     </ListboxOption>
@@ -74,7 +74,7 @@ import {
 import { SelectorIcon } from "@heroicons/vue/solid";
 
 export default defineComponent({
-    props: ["options"],
+    props: ["options", "select"],
     components: {
         Listbox,
         ListboxButton,
@@ -83,12 +83,20 @@ export default defineComponent({
         ListboxOptions,
         SelectorIcon,
     },
+    emits: ["change"],
     setup(props) {
-        const selected = ref(props.options[0]);
+        const index = window._.findIndex(
+            props.options,
+            (o) => window._.toLower(o) == props.select
+        );
 
+        let selected = ref(props.options[index > -1 ? index : 0]);
         return {
             selected,
         };
+    },
+    updated() {
+        this.$emit("change", this.selected);
     },
 });
 </script>

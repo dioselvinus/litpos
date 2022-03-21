@@ -21,7 +21,7 @@
                     <img
                         :src="
                             row.profile_photo_path
-                                ? row.profile_photo_path
+                                ? getImage(row.profile_photo_path)
                                 : row.profile_photo_url
                         "
                         class="w-8 h-8 rounded-full mr-2"
@@ -77,8 +77,9 @@ export default defineComponent({
             };
             isLoading.value = false;
         };
+        const getImage = (url) => window._.replace(url, /(^public\/images)/gm, "/storage/images");
 
-        return { tableData, pagination, loadData };
+        return { tableData, pagination, loadData, getImage };
     },
 });
 </script>
