@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('price');
             $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

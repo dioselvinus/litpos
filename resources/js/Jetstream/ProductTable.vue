@@ -32,7 +32,8 @@
             <table-body>
                 <div class="space-x-2">
                     <jet-button @click="editProduct(row)"> Edit </jet-button>
-                    <jet-danger-button @click="deleteProduct(row)">
+
+                    <jet-danger-button @click="deleteProduct(row.id)">
                         Delete
                     </jet-danger-button>
                 </div>
@@ -48,6 +49,9 @@ import { DataTable, TableBody, TableHead } from "@jobinsjp/vue3-datatable";
 import { defineComponent, ref } from "vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetButton from "@/Jetstream/Button.vue";
+import JetNavLink from "@/Jetstream/NavLink.vue";
+import { notify } from "notiwind";
+
 export default defineComponent({
     components: {
         TableBody,
@@ -55,6 +59,8 @@ export default defineComponent({
         DataTable,
         JetDangerButton,
         JetButton,
+        JetNavLink,
+        notify,
     },
     setup() {
         const tableData = ref([]);
@@ -67,7 +73,7 @@ export default defineComponent({
             } = await axios.get("/api/products", {
                 params: {
                     page: query.page - 1 < 0 ? 0 : query.page - 1,
-                    size: query.per_page,
+                    size: query.per_page ?? tableData.value.length,
                     search: query.search,
                 },
             });
@@ -87,7 +93,34 @@ export default defineComponent({
                 currency: "IDR",
             }).format(price);
 
-        return { tableData, pagination, loadData, getImage, setPrice };
+        const editProduct = (row) => {
+            window.location.href = `/products/${row.id}/edit`;
+        };
+
+        const deleteProduct = (id) => {
+            window.axios.delete(`/api/products/${id}`).then(() => {
+                notify(
+                    {
+                        group: "warning",
+                        title: "Deleted",
+                        text: "Produk telah Dihapus!",
+                        type: "delete",
+                    },
+                    4000
+                );
+                loadData(pagination.value);
+            });
+        };
+
+        return {
+            tableData,
+            pagination,
+            loadData,
+            getImage,
+            setPrice,
+            editProduct,
+            deleteProduct,
+        };
     },
 });
 </script>
