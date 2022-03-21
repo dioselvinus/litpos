@@ -143,7 +143,10 @@
                     Email
                 </th>
                 <th scope="col">
-                    Status
+                    Created At
+                </th>
+                <th scope="col">
+                    Updated At
                 </th>
             </tr>
         </thead>
@@ -157,7 +160,10 @@
                         {{ $user->email }}
                     </td>
                     <td>
-                        {{ $user->email_verified_at ? 'Verified' : 'Not Verified' }}
+                        {{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}
+                    </td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($user->updated_at)->format('Y-m-d') }}
                     </td>
                 </tr>
             @endforeach

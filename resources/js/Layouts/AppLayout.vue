@@ -25,6 +25,9 @@
                                 <jet-nav-link :href="route('cashier')" :active="route().current('cashier')"  v-if="$page.props.user.roles && $page.props.user.roles[0].name !== 'user'">
                                     Cashier
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('product')" :active="route().current('product')"  v-if="$page.props.user.roles && $page.props.user.roles[0].name !== 'user'">
+                                    Produk
+                                </jet-nav-link>
                             </div>
                         </div>
 

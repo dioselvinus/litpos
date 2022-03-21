@@ -3,7 +3,7 @@
         <template #breadcrumbs>
             <li class="inline-flex items-center">
                 <a
-                    href="#"
+                    href="/"
                     class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
                     <svg

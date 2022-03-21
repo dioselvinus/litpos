@@ -13,10 +13,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        Log::info('get all products from database');
-        return response()->json(Product::latest()->get());
+        if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
+            $product = Product::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('category', 'like', '%' . $request->query('search') . '%')->orWhere('status', 'like', $request->query('search') . '%');
+            $count = $product->count();
+            $productGet = $product->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
+            return response()->json(
+                [
+                    'totalProduct' => $count,
+                    'totalPages' => ceil($count / $request->query('size')),
+                    'data' => $productGet,
+                ]
+            );
+        } else {
+            return response()->json(Product::latest()->get());
+        }
     }
 
     /**

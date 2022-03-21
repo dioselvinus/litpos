@@ -1,0 +1,93 @@
+<template>
+    <data-table
+        :rows="tableData"
+        :pagination="pagination"
+        :loading="isLoading"
+        striped
+        sn
+        filter
+        @loadData="loadData"
+    >
+        <template #thead>
+            <table-head>Name</table-head>
+            <table-head>Category</table-head>
+            <table-head>Price</table-head>
+            <table-head>Status</table-head>
+            <table-head>Image</table-head>
+            <table-head>Action</table-head>
+        </template>
+
+        <template #tbody="{ row }">
+            <table-body v-text="row.name" />
+            <table-body v-text="row.category" />
+            <table-body v-text="setPrice(row.price)" />
+            <table-body v-text="row.status" />
+            <table-body>
+                <img
+                    :src="getImage(row.image)"
+                    class="w-16 h-16"
+                    :alt="row.name"
+                />
+            </table-body>
+            <table-body>
+                <div class="space-x-2">
+                    <jet-button @click="editProduct(row)"> Edit </jet-button>
+                    <jet-danger-button @click="deleteProduct(row)">
+                        Delete
+                    </jet-danger-button>
+                </div>
+            </table-body>
+        </template>
+    </data-table>
+</template>
+<style>
+@import url("@jobinsjp/vue3-datatable/dist/style.css");
+</style>
+<script>
+import { DataTable, TableBody, TableHead } from "@jobinsjp/vue3-datatable";
+import { defineComponent, ref } from "vue";
+import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetButton from "@/Jetstream/Button.vue";
+export default defineComponent({
+    components: {
+        TableBody,
+        TableHead,
+        DataTable,
+        JetDangerButton,
+        JetButton,
+    },
+    setup() {
+        const tableData = ref([]);
+        const isLoading = ref(false);
+        const pagination = ref({});
+        const loadData = async (query) => {
+            isLoading.value = true;
+            const {
+                data: { data, totalProduct },
+            } = await axios.get("/api/products", {
+                params: {
+                    page: query.page - 1 < 0 ? 0 : query.page - 1,
+                    size: query.per_page,
+                    search: query.search,
+                },
+            });
+            tableData.value = data;
+            pagination.value = {
+                ...pagination.value,
+                page: query.page,
+                total: totalProduct,
+            };
+            isLoading.value = false;
+        };
+
+        const getImage = (url) => window._.replace(url, "public", "storage");
+        const setPrice = (price) =>
+            new Intl.NumberFormat(["ban", "id"], {
+                style: "currency",
+                currency: "IDR",
+            }).format(price);
+
+        return { tableData, pagination, loadData, getImage, setPrice };
+    },
+});
+</script>

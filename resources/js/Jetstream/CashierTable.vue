@@ -11,8 +11,8 @@
         <template #thead>
             <table-head>Full Name</table-head>
             <table-head>Email</table-head>
-            <table-head>Status</table-head>
-            <table-head class="sr-only">Action</table-head>
+            <table-head>Created At</table-head>
+            <table-head>Updated At</table-head>
         </template>
 
         <template #tbody="{ row }">
@@ -33,12 +33,17 @@
 
             <table-body v-text="row.email" />
 
-            <table-body v-text="row.email_verified_at" />
+            <table-body>
+                {{ new Date(row.created_at).toISOString().substring(0, 10) }}
+            </table-body>
+            <table-body>
+                {{ new Date(row.updated_at).toISOString().substring(0, 10) }}
+            </table-body>
         </template>
     </data-table>
 </template>
 <style>
-    @import url("@jobinsjp/vue3-datatable/dist/style.css");
+@import url("@jobinsjp/vue3-datatable/dist/style.css");
 </style>
 <script>
 import { DataTable, TableBody, TableHead } from "@jobinsjp/vue3-datatable";
@@ -70,7 +75,7 @@ export default defineComponent({
                 page: query.page,
                 total: totalCashier,
             };
-            isLoading.value = false
+            isLoading.value = false;
         };
 
         return { tableData, pagination, loadData };
