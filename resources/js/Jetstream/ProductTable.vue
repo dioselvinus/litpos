@@ -21,7 +21,10 @@
             <table-body v-text="row.name" />
             <table-body v-text="row.category" />
             <table-body v-text="setPrice(row.price)" />
-            <table-body v-text="row.status" />
+            <table-body>
+                <span class="bg-green-100 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900" v-if="row.status === 'available'">{{ row.status }}</span>
+                <span class="bg-red-100 text-red-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900" v-else>{{row.status}}</span>
+            </table-body>
             <table-body>
                 <img
                     :src="getImage(row.image)"
@@ -31,7 +34,13 @@
             </table-body>
             <table-body>
                 <div class="space-x-2">
-                    <jet-button @click="editProduct(row)"> Edit </jet-button>
+                    <jet-nav-link
+                        :href="`/products/${row.id}/edit`"
+                        as="a"
+                        class="hover:!border-transparent focus:!border-transparent !p-0"
+                    >
+                        <jet-button> Edit </jet-button>
+                    </jet-nav-link>
 
                     <jet-danger-button @click="deleteProduct(row.id)">
                         Delete
