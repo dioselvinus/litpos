@@ -42,7 +42,10 @@
                                 </jet-nav-link>
                                 <jet-nav-link
                                     :href="route('product')"
-                                    :active="route().current('product')"
+                                    :active="
+                                        route().current('product') ||
+                                        route().current('product.edit')
+                                    "
                                     v-if="
                                         $page.props.user.roles &&
                                         $page.props.user.roles[0].name !==

@@ -21,7 +21,7 @@
             </li>
             <li class="inline-flex items-center">
                 <a
-                    href="/"
+                    :href="route('product')"
                     class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
                     <svg
@@ -287,12 +287,14 @@ export default defineComponent({
             if (this.$refs.photo_url.$el.value.match(regex)) {
                 this.form.photo = this.$refs.photo_url.$el.value;
             }
-            console.log(this.form);
-            // this.form.post(route("user-profile-information.update"), {
-            //     errorBag: "updateProfileInformation",
-            //     preserveScroll: true,
-            //     onSuccess: () => this.clearPhotoFileInput(),
-            // });
+            this.form.post(
+                route("products.update", { product: this.product.id }),
+                {
+                    errorBag: "updateProfileInformation",
+                    preserveScroll: true,
+                    onSuccess: () => this.clearPhotoFileInput(),
+                }
+            );
         },
 
         selectNewPhoto() {

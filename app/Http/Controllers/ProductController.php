@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -68,9 +70,26 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        if ($request->hasFile('photo')) {
+            // save to storage laravel
+            Storage::delete($product->image);
+            $photo = $request->file('photo');
+            $path = Storage::putFileAs(
+                'public/images/products', $request->file('photo'), $photo->hashName()
+            );
+            $product->image = $path;
+        } else if ($request->photo) {
+            Storage::delete($product->image);
+            $product->image = $request->photo;
+        }
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->category = Str::lower($request->category);
+        $product->status = Str::lower($request->status);
+        $product->save();
+        return redirect()->route('product');
     }
 
     /**

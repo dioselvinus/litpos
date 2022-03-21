@@ -28,7 +28,7 @@
             <table-body>
                 <img
                     :src="getImage(row.image)"
-                    class="w-16 h-16"
+                    class="w-16 h-16 object-cover"
                     :alt="row.name"
                 />
             </table-body>
