@@ -41,7 +41,34 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'status' => 'required|string|max:255',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            // save to storage laravel
+            $photo = $request->file('photo');
+            $path = Storage::putFileAs(
+                'public/images/products', $photo, $photo->hashName()
+            );
+        } else if ($request->photo) {
+            $path = $request->photo;
+        }
+
+        $product = Product::create([
+            'id' => Str::uuid(),
+            'name' => $request->name,
+            'category' => $request->category,
+            'price' => $request->price,
+            'status' => $request->status,
+            'image' => $path,
+        ]);
+
+        return redirect()->route('product');
     }
 
     /**

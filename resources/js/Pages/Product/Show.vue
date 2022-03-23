@@ -41,7 +41,18 @@
             </li>
         </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
-            <div class="mb-2">
+            <div class="mb-2 flex justify-between items-center">
+                <jet-nav-link
+                    :href="route('product.create')"
+                    class="hover:!border-transparent focus:!border-transparent !p-0"
+                >
+                    <jet-button
+                        type="button"
+                        class="focus:!ring-0"
+                    >
+                        Create
+                    </jet-button>
+                </jet-nav-link>
                 <div class="inline-flex" role="group">
                     <jet-nav-link
                         :href="route('product.pdf')"
@@ -106,6 +117,7 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetTable from "@/Jetstream/ProductTable.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetButton from "@/Jetstream/Button.vue";
 import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetDropdown from "@/Jetstream/Dropdown.vue";
 import JetDropdownLink from "@/Jetstream/DropdownLink.vue";
@@ -114,6 +126,7 @@ export default defineComponent({
         AppLayout,
         JetTable,
         JetSecondaryButton,
+        JetButton,
         JetNavLink,
         JetDropdown,
         JetDropdownLink,
