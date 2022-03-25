@@ -140,7 +140,7 @@ Route::prefix('api')->group(function () {
                 return response()->json(User::with('roles')->get());
             }
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
-                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->with('roles');
+                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role(['employee','manager'])->with('roles');
                 $count = $user->count();
                 $userGet = $user->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
                 return response()->json(

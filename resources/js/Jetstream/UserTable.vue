@@ -34,7 +34,13 @@
             </table-body>
 
             <table-body v-text="row.email" />
-            <table-body v-text="row.roles[0].name" />
+            <table-body>
+                <jet-select
+                    :options="optionsRoles"
+                    :select="row.roles[0].name"
+                    @change="updateStatus"
+                />
+            </table-body>
 
             <table-body>
                 {{ new Date(row.created_at).toISOString().substring(0, 10) }}
@@ -59,6 +65,7 @@
 import { DataTable, TableBody, TableHead } from "@jobinsjp/vue3-datatable";
 import { defineComponent, ref } from "vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
+import JetSelect from "@/Jetstream/Select.vue";
 import { notify } from "notiwind";
 
 export default defineComponent({
@@ -67,7 +74,13 @@ export default defineComponent({
         TableHead,
         DataTable,
         JetDangerButton,
+        JetSelect,
         notify,
+    },
+    data() {
+        return{
+            optionsRoles: ['Manager','Employee'],
+        }
     },
     setup() {
         const tableData = ref([]);
@@ -110,7 +123,14 @@ export default defineComponent({
             });
         };
 
-        return { tableData, pagination, loadData, getImage, deleteUser, isLoading };
+        return {
+            tableData,
+            pagination,
+            loadData,
+            getImage,
+            deleteUser,
+            isLoading,
+        };
     },
 });
 </script>
