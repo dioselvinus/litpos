@@ -92,6 +92,25 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
         });
 
     });
+
+    Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->group(function () {
+        Route::prefix('/user')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('User/Show');
+            })->name('user');
+            Route::get('/pdf', function () {
+                return PDF::loadView('pdf.table.user', ['users' => User::all()])->download(Carbon\Carbon::now() . '_User.pdf');
+            })->name('user.pdf');
+            Route::get('/excel', function () {
+                $collection = User::get(['name', 'email', 'role', 'created_at', 'updated_at'])->toArray();
+                $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_User.xlsx');
+                foreach ($collection as $row) {
+                    $excel->addRow($row);
+                }
+                return $excel->toBrowser();
+            })->name('user.excel');
+        });
+    });
 });
 
 /**
@@ -99,7 +118,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
  * this solution is not good because it is not microservice.
  */
 Route::prefix('api')->group(function () {
-    Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee'])->group(function () {
+    Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
         Route::apiResource('products', ProductController::class);
         Route::get('/employee', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
@@ -114,6 +133,27 @@ Route::prefix('api')->group(function () {
                     ]
                 );
             }
+        });
+
+        Route::get('/user', function (Request $request) {
+            if (empty($request->all())) {
+                return response()->json(User::with('roles')->get());
+            }
+            if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
+                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->with('roles');
+                $count = $user->count();
+                $userGet = $user->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
+                return response()->json(
+                    [
+                        'totalUser' => $count,
+                        'totalPages' => ceil($count / $request->query('size')),
+                        'data' => $userGet,
+                    ]
+                );
+            }
+        });
+        Route::delete('/user/{user}', function (User $user) {
+            $user->delete();
         });
     });
 });

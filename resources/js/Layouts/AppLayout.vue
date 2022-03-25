@@ -35,10 +35,21 @@
                                     v-if="
                                         $page.props.user.roles &&
                                         $page.props.user.roles[0].name !==
-                                            'user'
+                                            'user'&& $page.props.user.roles[0].name !== 'admin'
                                     "
                                 >
                                     Employee
+                                </jet-nav-link>
+                                <jet-nav-link
+                                    :href="route('user')"
+                                    :active="route().current('user')"
+                                    v-if="
+                                        $page.props.user.roles &&
+                                        $page.props.user.roles[0].name !==
+                                            'user' || $page.props.user.roles[0].name !== 'manager'
+                                    "
+                                >
+                                    User
                                 </jet-nav-link>
                                 <jet-nav-link
                                     :href="route('product')"

@@ -41,7 +41,7 @@
             </li>
         </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
-            <div class="mb-2">
+            <div class="mb-2 flex justify-end">
                 <div class="inline-flex" role="group">
                     <jet-nav-link
                         :href="route('employee.pdf')"
