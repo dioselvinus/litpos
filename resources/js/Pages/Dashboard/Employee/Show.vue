@@ -39,7 +39,7 @@
                 </div>
                 <div class="md:overflow-auto h-screen pb-40 overflow_menu">
                     <div
-                        class="w-fit px-6 lg:px-8 flex flex-wrap gap-4 md:gap-1 lg:gap-4"
+                        class="min-w-fit px-6 lg:px-8 flex flex-wrap gap-4 md:gap-1 lg:gap-4"
                     >
                         <employee-menu
                             v-bind:filter="filterMenu"
@@ -95,16 +95,7 @@ export default defineComponent({
     },
     data: () => {
         return {
-            options: [
-                {
-                    id: 1,
-                    name: "Dine In",
-                },
-                {
-                    id: 2,
-                    name: "Take Away",
-                },
-            ],
+            options: ["Dine In", "Take Away"],
             filterMenu: "all",
             search: null,
             priceAll: 0,

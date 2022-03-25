@@ -30,7 +30,19 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Main');
     })->name('dashboard');
+
+    Route::middleware(['auth:sanctum', 'verified', 'role:employee'])->group(function () {
+        Route::get('/transactions', function () {
+            return Inertia::render('Transactions/Index');
+        })->name('transactions');
+
+        Route::get('kitchen', function () {
+            return Inertia::render('Kitchen/Show');
+        })->name('kitchen');
+    });
+
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
+
         Route::prefix('/employee')->group(function () {
             Route::get('/', function () {
                 return Inertia::render('Employee/Show');
@@ -48,6 +60,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
                 return $excel->toBrowser();
             })->name('employee.excel');
         });
+
         Route::prefix('/product')->group(function () {
             Route::get('/', function () {
                 return Inertia::render('Product/Show');
@@ -77,6 +90,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
                 ]);
             })->name('product.edit');
         });
+
     });
 });
 

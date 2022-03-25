@@ -115,30 +115,23 @@
                                             </span>
                                         </jet-dropdown-link>
 
-                                        <jet-dropdown-link
-                                            :href="route('api-tokens.index')"
-                                            v-if="
-                                                $page.props.jetstream
-                                                    .hasApiFeatures
-                                            "
-                                        >
-                                            API Tokens
-                                        </jet-dropdown-link>
-
                                         <div
                                             class="border-t border-gray-100"
                                         ></div>
 
+                                        <jet-dropdown-link :href="route('kitchen')">
+                                            Kitchen
+                                        </jet-dropdown-link>
                                         <!-- Authentication -->
                                         <form
-                                            @submit.prevent="loginmore"
+                                            @submit.prevent="loginMore"
                                         ></form>
                                         <form @submit.prevent="logout">
                                             <jet-dropdown-link as="button">
                                                 Log Out
                                             </jet-dropdown-link>
                                         </form>
-                                        <form @submit.prevent="logoutall">
+                                        <form @submit.prevent="logoutAll">
                                             <jet-dropdown-link as="button">
                                                 Log Out All
                                             </jet-dropdown-link>
