@@ -6,6 +6,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
@@ -140,7 +141,7 @@ Route::prefix('api')->group(function () {
                 return response()->json(User::with('roles')->get());
             }
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
-                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role(['employee','manager'])->with('roles');
+                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role(['employee', 'manager'])->with('roles');
                 $count = $user->count();
                 $userGet = $user->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
                 return response()->json(
@@ -155,5 +156,9 @@ Route::prefix('api')->group(function () {
         Route::delete('/user/{user}', function (User $user) {
             $user->delete();
         });
+        Route::put('/user/{user}', function (Request $request, User $user) {
+            $user->removeRole($user->roles->first());
+            $user->assignRole(Str::lower($request->roles));
+        })->name('user.update');
     });
 });

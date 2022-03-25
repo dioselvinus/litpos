@@ -38,7 +38,7 @@
                 <jet-select
                     :options="optionsRoles"
                     :select="row.roles[0].name"
-                    @change="updateStatus"
+                    @change="updateChangeRole(row.id, $event)"
                 />
             </table-body>
 
@@ -78,9 +78,9 @@ export default defineComponent({
         notify,
     },
     data() {
-        return{
-            optionsRoles: ['Manager','Employee'],
-        }
+        return {
+            optionsRoles: ["Manager", "Employee"],
+        };
     },
     setup() {
         const tableData = ref([]);
@@ -123,6 +123,25 @@ export default defineComponent({
             });
         };
 
+        const updateChangeRole = (id, value) => {
+            window.axios
+                .put(route("user.update", { user: id }), {
+                    roles: value,
+                })
+                .then(() => {
+                    loadData(pagination.value);
+                    notify(
+                        {
+                            group: "warning",
+                            title: "Updated",
+                            text: "Roles telah Diupdate!",
+                            type: "success",
+                        },
+                        4000
+                    );
+                });
+        };
+
         return {
             tableData,
             pagination,
@@ -130,6 +149,7 @@ export default defineComponent({
             getImage,
             deleteUser,
             isLoading,
+            updateChangeRole,
         };
     },
 });
