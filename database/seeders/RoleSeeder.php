@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         $permissionsByRole = [
             'admin' => ['edit user', 'delete user', 'create user'],
             'manager' => ['edit product', 'delete product', 'create product'],
-            'cashier' => ['add transaction'],
+            'employee' => ['add transaction'],
             'user' => ['view me', 'edit me', 'delete me'],
         ];
         foreach ($permissionsByRole as $roleName => $permissions) {

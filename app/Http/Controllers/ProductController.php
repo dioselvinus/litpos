@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
+        if (empty($request->all())) {
+            return response()->json(Product::latest()->get());
+        } else if (!empty($request->query('search')) || is_int($request->query('size')) >= 0 && is_int($request->query('page')) >= 0) {
             $product = Product::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('category', 'like', '%' . $request->query('search') . '%')->orWhere('status', 'like', $request->query('search') . '%');
             $count = $product->count();
             $productGet = $product->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
@@ -28,8 +31,6 @@ class ProductController extends Controller
                     'data' => $productGet,
                 ]
             );
-        } else {
-            return response()->json(Product::latest()->get());
         }
     }
 
@@ -60,7 +61,7 @@ class ProductController extends Controller
         }
 
         $product = Product::create([
-            'id' => Str::uuid(),
+            'id' => Uuid::uuid5(Uuid::NAMESPACE_DNS, $request['name']),
             'name' => $request->name,
             'category' => $request->category,
             'price' => $request->price,

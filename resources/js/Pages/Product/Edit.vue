@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Table Cashier">
+    <app-layout title="Edit Product">
         <template #breadcrumbs>
             <li class="inline-flex items-center">
                 <a

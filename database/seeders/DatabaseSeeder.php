@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
         ]);
         \App\Models\User::factory(10)->create()->each(function ($user) {
-            $user->assignRole('cashier');
+            $user->assignRole('employee');
         });
         \App\Models\User::factory(1)->create()->each(function ($user) {
             $user->assignRole('admin');

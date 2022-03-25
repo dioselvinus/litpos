@@ -30,15 +30,15 @@
                                     Dashboard
                                 </jet-nav-link>
                                 <jet-nav-link
-                                    :href="route('cashier')"
-                                    :active="route().current('cashier')"
+                                    :href="route('employee')"
+                                    :active="route().current('employee')"
                                     v-if="
                                         $page.props.user.roles &&
                                         $page.props.user.roles[0].name !==
                                             'user'
                                     "
                                 >
-                                    Cashier
+                                    Employee
                                 </jet-nav-link>
                                 <jet-nav-link
                                     :href="route('product')"

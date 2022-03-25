@@ -26,27 +26,27 @@ Route::get('/', function () {
     return redirect('/login');
 })->middleware('guest');
 
-Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier|user'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Main');
     })->name('dashboard');
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
-        Route::prefix('/cashier')->group(function () {
+        Route::prefix('/employee')->group(function () {
             Route::get('/', function () {
-                return Inertia::render('Cashier/Show');
-            })->name('cashier');
+                return Inertia::render('Employee/Show');
+            })->name('employee');
             Route::get('/pdf', function () {
-                return PDF::loadView('pdf.table.cashier', ['users' => user::role('cashier')->get()])->download(Carbon\Carbon::now() . '_Cashier.pdf');
-            })->name('cashier.pdf');
+                return PDF::loadView('pdf.table.employee', ['users' => user::role('employee')->get()])->download(Carbon\Carbon::now() . '_Employee.pdf');
+            })->name('employee.pdf');
             Route::get('/excel', function () {
-                $collection = user::role('cashier')->get(['name', 'email', 'created_at', 'updated_at'])->toArray();
-                $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_Cashier.xlsx');
+                $collection = user::role('employee')->get(['name', 'email', 'created_at', 'updated_at'])->toArray();
+                $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_Employee.xlsx');
                 foreach ($collection as $row) {
                     unset($row['profile_photo_url']);
                     $excel->addRow($row);
                 }
                 return $excel->toBrowser();
-            })->name('cashier.excel');
+            })->name('employee.excel');
         });
         Route::prefix('/product')->group(function () {
             Route::get('/', function () {
@@ -85,16 +85,16 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|cashier|user'
  * this solution is not good because it is not microservice.
  */
 Route::prefix('api')->group(function () {
-    Route::middleware(['auth:sanctum', 'verified', 'role:manager|cashier'])->group(function () {
+    Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee'])->group(function () {
         Route::apiResource('products', ProductController::class);
-        Route::get('/cashier', function (Request $request) {
+        Route::get('/employee', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
-                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role('cashier');
+                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role('employee');
                 $count = $user->count();
                 $userGet = $user->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
                 return response()->json(
                     [
-                        'totalCashier' => $count,
+                        'totalEmployee' => $count,
                         'totalPages' => ceil($count / $request->query('size')),
                         'data' => $userGet,
                     ]

@@ -31,20 +31,20 @@
         </app-layout>
     </template>
 
-    <show-cashier v-else-if="$page.props.user.roles[0].name === 'cashier'" />
+    <show-employee v-else-if="$page.props.user.roles[0].name === 'employee'" />
     <show-manager-admin v-else />
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import ShowCashier from "@/Pages/Dashboard/Cashier/Show";
+import ShowEmployee from "@/Pages/Dashboard/Employee/Show";
 import ShowManagerAdmin from "@/Pages/Dashboard/Show";
 
 export default defineComponent({
     components: {
         AppLayout,
-        ShowCashier,
+        ShowEmployee,
         ShowManagerAdmin,
     },
 });
