@@ -35,6 +35,7 @@
                     </span>
                     <jet-select
                         v-bind:options="selectOption"
+                        @change="handleSelectChange"
                         class="w-36"
                     ></jet-select>
                 </div>
@@ -285,38 +286,15 @@ export default defineComponent({
         Finance,
         FinanceOverview,
     },
+    methods: {
+        handleSelectChange(value) {
+            this.selected = value;
+        },
+    },
     data: () => {
-        const chartOptionsBase = {
-            legend: {
-                show: false,
-            },
-            grid: {
-                show: false,
-                padding: {
-                    right: 0,
-                    left: 0,
-                },
-            },
-            dataLabels: {
-                enabled: false,
-            },
-        };
-
         return {
-            selectOption: [
-                {
-                    id: 1,
-                    name: "Dialy",
-                },
-                {
-                    id: 2,
-                    name: "Monthly",
-                },
-                {
-                    id: 3,
-                    name: "Yearly",
-                },
-            ],
+            selectOption: ["Dialy", "Monthly", "Yearly"],
+            selected: "Yearly",
             series: [
                 {
                     name: "Desktops",
@@ -325,7 +303,19 @@ export default defineComponent({
             ],
 
             chartOptions: {
-                ...chartOptionsBase,
+                legend: {
+                    show: false,
+                },
+                grid: {
+                    show: false,
+                    padding: {
+                        right: 0,
+                        left: 0,
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
                 chart: {
                     type: "area",
                     zoom: {
@@ -350,27 +340,6 @@ export default defineComponent({
                     },
                 },
 
-                title: {
-                    text: "$1,000",
-                    align: "left",
-                    offsetX: 20,
-                    offsetY: 10,
-                    style: {
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                    },
-                },
-                subtitle: {
-                    text: "Daily Sales",
-                    align: "left",
-                    offsetX: 20,
-                    offsetY: 40,
-                    style: {
-                        fontSize: "14px",
-                        color: "#666",
-                    },
-                },
-
                 xaxis: {
                     categories: [
                         "Jan",
@@ -387,6 +356,28 @@ export default defineComponent({
                         "Dec",
                     ],
                 },
+            },
+        };
+    },
+    created() {
+        this.chartOptions["title"] = {
+            text: "$1,000",
+            align: "left",
+            offsetX: 20,
+            offsetY: 10,
+            style: {
+                fontSize: "24px",
+                fontWeight: "bold",
+            },
+        };
+        this.chartOptions["subtitle"] = {
+            text: `${this.selected} sales`,
+            align: "left",
+            offsetX: 20,
+            offsetY: 40,
+            style: {
+                fontSize: "14px",
+                color: "#666",
             },
         };
     },
