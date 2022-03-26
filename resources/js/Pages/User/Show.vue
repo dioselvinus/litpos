@@ -41,7 +41,8 @@
             </li>
         </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
-            <div>
+            <jet-signup-table></jet-signup-table>
+            <div class="pt-10">
                 <span class="font-bold text-xl flex items-center gap-3 ml-1">
                     <svg viewBox="0 0 24 24" class="h-6 w-6 inline-block">
                         <path
@@ -118,6 +119,7 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetTable from "@/Jetstream/UserTable.vue";
+import JetSignupTable from "@/Jetstream/SignupTable.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetDropdown from "@/Jetstream/Dropdown.vue";
@@ -130,6 +132,7 @@ export default defineComponent({
         JetNavLink,
         JetDropdown,
         JetDropdownLink,
+        JetSignupTable
     },
 });
 </script>

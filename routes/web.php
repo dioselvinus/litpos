@@ -162,5 +162,22 @@ Route::prefix('api')->group(function () {
             $user->removeRole($user->roles->first());
             $user->assignRole(Str::lower($request->roles));
         })->name('user.update');
+        Route::get('/user/new', function (Request $request) {
+            if (empty($request->all())) {
+                return response()->json(User::with('roles')->role(['user'])->get());
+            }
+            if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
+                $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role(['user'])->with('roles');
+                $count = $user->count();
+                $userGet = $user->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
+                return response()->json(
+                    [
+                        'totalUser' => $count,
+                        'totalPages' => ceil($count / $request->query('size')),
+                        'data' => $userGet,
+                    ]
+                );
+            }
+        });
     });
 });
