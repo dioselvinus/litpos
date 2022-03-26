@@ -100,12 +100,14 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
                 return Inertia::render('User/Show');
             })->name('user');
             Route::get('/pdf', function () {
-                return PDF::loadView('pdf.table.user', ['users' => User::all()])->download(Carbon\Carbon::now() . '_User.pdf');
+                return PDF::loadView('pdf.table.user', ['users' => User::with('roles')->role(['employee', 'manager'])->get()])->download(Carbon\Carbon::now() . '_User.pdf');
             })->name('user.pdf');
             Route::get('/excel', function () {
-                $collection = User::get(['name', 'email', 'role', 'created_at', 'updated_at'])->toArray();
+                $collection = User::with('roles')->role(['employee', 'manager'])->get()->toArray(); //['name', 'email', 'created_at', 'updated_at']
                 $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_User.xlsx');
                 foreach ($collection as $row) {
+                    $row['role'] = $row['roles'][0]['name'];
+                    unset($row['roles'], $row['id'], $row['email_verified_at'], $row['current_team_id'], $row['profile_photo_path'], $row['deleted_at'], $row['profile_photo_url']);
                     $excel->addRow($row);
                 }
                 return $excel->toBrowser();
@@ -138,7 +140,7 @@ Route::prefix('api')->group(function () {
 
         Route::get('/user', function (Request $request) {
             if (empty($request->all())) {
-                return response()->json(User::with('roles')->get());
+                return response()->json(User::with('roles')->role(['employee', 'manager'])->get());
             }
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
                 $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role(['employee', 'manager'])->with('roles');

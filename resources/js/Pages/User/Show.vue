@@ -54,7 +54,7 @@
                 <div class="mb-2 flex justify-end">
                     <div class="inline-flex" role="group">
                         <jet-nav-link
-                            :href="route('employee.pdf')"
+                            :href="route('user.pdf')"
                             class="hover:!border-transparent focus:!border-transparent !p-0"
                         >
                             <jet-secondary-button
@@ -93,13 +93,13 @@
                                 </div>
 
                                 <jet-dropdown-link
-                                    :href="route('employee.pdf')"
+                                    :href="route('user.pdf')"
                                     as="a"
                                 >
                                     PDF
                                 </jet-dropdown-link>
                                 <jet-dropdown-link
-                                    :href="route('employee.excel')"
+                                    :href="route('user.excel')"
                                     as="a"
                                 >
                                     EXCEL
