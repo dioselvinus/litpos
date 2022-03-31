@@ -125,7 +125,21 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
  * this solution is not good because it is not microservice.
  */
 Route::prefix('api')->group(function () {
+    // test sandbox qrcode pay
+    Route::get('/transactions/{transaction}/pay', function (Transaction $transaction) {
+
+        $service = new Service();
+        $service->payQRCode($transaction->id);
+
+        $transaction->status = 'success';
+        $transaction->save();
+        return redirect('/');
+    })->name('transactions.pay');
+
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
+        Route::get('/transactions/hot', function () {
+            return Transaction::latest()->limit(5)->get();
+        });
         Route::post('/transactions/new', function (Request $request) {
             if (!session('qr_transaction')) {
                 $service = new Service();
@@ -168,17 +182,6 @@ Route::prefix('api')->group(function () {
             session()->forget('qr_transaction');
             return $transaction;
         })->name('transactions.cancel');
-
-        // test sandbox qrcode pay
-        Route::get('/transactions/{transaction}/pay', function (Transaction $transaction) {
-
-            $service = new Service();
-            $service->payQRCode($transaction->id);
-
-            $transaction->status = 'success';
-            $transaction->save();
-            return redirect('/');
-        })->name('transactions.pay');
 
         Route::apiResource('products', ProductController::class);
         Route::get('/employee', function (Request $request) {
