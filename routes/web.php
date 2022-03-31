@@ -25,7 +25,7 @@ use Spatie\SimpleExcel\SimpleExcelWriter;
 |
  */
 
-require __DIR__ . '\jetstream.php';
+require __DIR__ . '/jetstream.php';
 
 Route::get('/', function () {
     return redirect('/login');
