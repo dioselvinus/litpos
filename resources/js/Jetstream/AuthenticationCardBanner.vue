@@ -1,63 +1,49 @@
 <template>
-    <div
-        id="default-carousel"
-        data-carousel="slide"
-        class="relative col-span-2"
-    >
+    <div id="default-carousel" data-carousel="slide">
         <div class="overflow-hidden h-screen relative">
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 object-cover"
                 data-carousel-item="active"
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform"
+                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform"
+                class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
 
             <div
-                class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full"
+                class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full object-cover"
                 data-carousel-item=""
             >
-                <img
-                    src="https://source.unsplash.com/random/900x700/?market"
-                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-                    alt="..."
-                />
+                <span
+                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 h-full bg-[url('https://source.unsplash.com/random/900x700/?market')] bg-no-repeat bg-cover"
+                ></span>
             </div>
         </div>
 
@@ -98,56 +84,5 @@
                 data-carousel-slide-to="4"
             ></button>
         </div>
-
-        <!-- <button
-                type="button"
-                class="flex absolute top-0 left-0 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
-                data-carousel-prev=""
-            >
-                <span
-                    class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
-                >
-                    <svg
-                        class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 19l-7-7 7-7"
-                        ></path>
-                    </svg>
-                    <span class="hidden">Previous</span>
-                </span>
-            </button>
-            <button
-                type="button"
-                class="flex absolute top-0 right-0 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
-                data-carousel-next=""
-            >
-                <span
-                    class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
-                >
-                    <svg
-                        class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 5l7 7-7 7"
-                        ></path>
-                    </svg>
-                    <span class="hidden">Next</span>
-                </span>
-            </button> -->
     </div>
 </template>

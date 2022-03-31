@@ -60,7 +60,7 @@
             >
                 <span class="w-fit mx-auto">Log in</span>
             </jet-button>
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div class="lg:absolute lg:bottom-8 lg:left-1/2 transform lg:-translate-x-1/2 mx-auto text-center mt-8">
                 <a
                     :href="route('register')"
                     class="underline text-sm text-gray-600 hover:text-gray-900"

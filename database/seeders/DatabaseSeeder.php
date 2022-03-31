@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
         ]);
-        \App\Models\User::factory(10)->create()->each(function ($user) {
-            $user->assignRole('cashier');
+        \App\Models\User::factory(1)->create()->each(function ($user) {
+            $user->assignRole('employee');
         });
         \App\Models\User::factory(1)->create()->each(function ($user) {
             $user->assignRole('admin');
         });
-        \App\Models\User::factory(10)->create()->each(function ($user) {
+        \App\Models\User::factory(1)->create()->each(function ($user) {
             $user->assignRole('manager');
         });
         \App\Models\Product::factory(100)->create();
