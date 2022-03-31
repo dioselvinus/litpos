@@ -38,6 +38,5 @@ class Product extends Model
      *
      * @var array
      */
-    protected $casts = [
-];
+    protected $casts = [];
 }

@@ -32,7 +32,7 @@
                                 class="w-20 sm:w-56 lg:w-96 pl-10 p-2.5"
                             />
                         </div>
-                        <employee-filter-menu @clickFilter="onClickFilter" />
+                        <!-- <employee-filter-menu @clickFilter="onClickFilter" /> -->
                         <employee-filter-menu @clickFilter="onClickFilter" />
                     </div>
                     <span id="time" class="font-bold"></span>
@@ -59,9 +59,11 @@
                     >
                         <employee-menu-selected />
                     </div>
-                    <jet-button class="w-full !p-4">
-                        Charge {{ setPrice(priceAll) }}
-                    </jet-button>
+                    <Link :href="route('transactions')">
+                        <jet-button class="w-full !p-4">
+                            Charge {{ setPrice(priceAll + Math.ceil(priceAll * 0.1)) }}
+                        </jet-button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -79,6 +81,7 @@ import AppLayout from "@/Layouts/AppLayoutEmployee.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetButton from "@/Jetstream/Button.vue";
 import JetSelect from "@/Jetstream/Select.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import EmployeeMenu from "@/Pages/Dashboard/Employee/Partials/Menus.vue";
 import EmployeeFilterMenu from "@/Pages/Dashboard/Employee/Partials/Filter.vue";
 import EmployeeMenuSelected from "@/Pages/Dashboard/Employee/Partials/MenuSelected.vue";
@@ -92,6 +95,8 @@ export default defineComponent({
         EmployeeMenu,
         EmployeeFilterMenu,
         EmployeeMenuSelected,
+        Head,
+        Link,
     },
     data: () => {
         return {

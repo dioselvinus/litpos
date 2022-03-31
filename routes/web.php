@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Services\Checkout\CheckoutService as Service;
 use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\TransactionProduct;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 /*
@@ -34,7 +38,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
 
     Route::middleware(['auth:sanctum', 'verified', 'role:employee'])->group(function () {
         Route::get('/transactions', function () {
-            return Inertia::render('Transactions/Index');
+            return Inertia::render('Transactions/Show');
         })->name('transactions');
 
         Route::get('kitchen', function () {
@@ -122,6 +126,60 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
  */
 Route::prefix('api')->group(function () {
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
+        Route::post('/transactions/new', function (Request $request) {
+            if (!session('qr_transaction')) {
+                $service = new Service();
+                session(['qr_transaction' => $service->createQRCode(['amount' => $request->amount])]);
+            }
+            try {
+                Transaction::create([
+                    'id' => session('qr_transaction')['external_id'],
+                    'user_id' => $request->user()->id,
+                    'subtotal' => $request->amount,
+                    'ppn' => ceil($request->amount * 0.1),
+                    'total' => $request->amount + ceil($request->amount * 0.1),
+                    'status' => 'pending',
+                ]);
+            } catch (\Exception$e) {
+                if ($e->getCode() == 23000) {
+                    return session('qr_transaction');
+                }
+            }
+            foreach (array_values($request->basket) as $item) {
+                TransactionProduct::insert([
+                    'id' => Uuid::uuid4()->toString(),
+                    'transaction_id' => session('qr_transaction')['external_id'],
+                    'product_id' => $item['product']['id'],
+                    'quantity' => $item['quantity'],
+                ]);
+            }
+            return session('qr_transaction');
+        })->name('transactions.new');
+
+        Route::post('/transactions/{transaction}/check', function (Transaction $transaction) {
+            if ($transaction->status == 'success') {
+                session()->forget('qr_transaction');
+            }
+            return $transaction->status;
+        })->name('transactions.show');
+        Route::post('/transactions/{transaction}/cancel', function (Transaction $transaction) {
+            $transaction->status = 'failed';
+            $transaction->save();
+            session()->forget('qr_transaction');
+            return $transaction;
+        })->name('transactions.cancel');
+
+        // test sandbox qrcode pay
+        Route::get('/transactions/{transaction}/pay', function (Transaction $transaction) {
+
+            $service = new Service();
+            $service->payQRCode($transaction->id);
+
+            $transaction->status = 'success';
+            $transaction->save();
+            return redirect('/');
+        })->name('transactions.pay');
+
         Route::apiResource('products', ProductController::class);
         Route::get('/employee', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {

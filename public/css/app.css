@@ -1406,6 +1406,10 @@ input:checked + .toggle-bg {
   margin-top: -0.25rem;
   margin-bottom: -0.25rem;
 }
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -1565,6 +1569,9 @@ input:checked + .toggle-bg {
 .h-96 {
   height: 24rem;
 }
+.h-\[240px\] {
+  height: 240px;
+}
 .h-\[calc\(100vh-4rem\)\] {
   height: calc(100vh - 4rem);
 }
@@ -1641,6 +1648,12 @@ input:checked + .toggle-bg {
 }
 .w-\[50rem\] {
   width: 50rem;
+}
+.w-\[240px\] {
+  width: 240px;
+}
+.w-\[300px\] {
+  width: 300px;
 }
 .w-\[20rem\] {
   width: 20rem;
@@ -1804,6 +1817,9 @@ input:checked + .toggle-bg {
 }
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2160,6 +2176,9 @@ input:checked + .toggle-bg {
 .p-3 {
   padding: 0.75rem;
 }
+.p-5 {
+  padding: 1.25rem;
+}
 .p-2\.5 {
   padding: 0.625rem;
 }
@@ -2235,6 +2254,10 @@ input:checked + .toggle-bg {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
+.\!px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
@@ -2290,6 +2313,9 @@ input:checked + .toggle-bg {
 .pt-20 {
   padding-top: 5rem;
 }
+.pt-10 {
+  padding-top: 2.5rem;
+}
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -2298,9 +2324,6 @@ input:checked + .toggle-bg {
 }
 .pb-40 {
   padding-bottom: 10rem;
-}
-.pt-10 {
-  padding-top: 2.5rem;
 }
 .text-left {
   text-align: left;
