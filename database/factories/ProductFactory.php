@@ -30,7 +30,7 @@ class ProductFactory extends Factory
         $image = $this->faker->image(null, 750, 400, 'nightlife');
         return [
             'id' => $this->faker->uuid,
-            'name' => $this->faker->name,
+            'name' => $this->faker->colorName,
             'image' => Storage::putFile('public/images/products', new HttpFile($image), 'public'),
             'category' => $this->faker->randomElement(['food', 'drink']),
             'price' => $this->faker->numberBetween(1000, 10000),
