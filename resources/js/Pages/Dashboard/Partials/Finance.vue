@@ -47,8 +47,10 @@
                                         {{ setPrice(value.total) }}
                                     </h4>
                                     <p class="text-gray-500 dark:text-gray-400">
-                                        <b>5 days ago</b> via
-                                        {{ value.payment ?? "QRIS" }} -
+                                        <b>{{
+                                            getDiffTime(value.created_at)
+                                        }}</b>
+                                        via {{ value.payment ?? "QRIS" }} -
                                         {{ value.user.name }}
                                     </p>
                                 </div>
@@ -113,6 +115,24 @@ export default defineComponent({
                 style: "currency",
                 currency: "IDR",
             }).format(price),
+        // get diff time from var timestamps and now
+        getDiffTime(timestamp) {
+            const now = new Date();
+            const diff = now - new Date(timestamp);
+            const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor(diff / (1000 * 60 * 60));
+            const diffMinutes = Math.floor(diff / (1000 * 60));
+            const diffSeconds = Math.floor(diff / 1000);
+            if (diffDays > 0) {
+                return diffDays + " days ago";
+            } else if (diffHours > 0) {
+                return diffHours + " hours ago";
+            } else if (diffMinutes > 0) {
+                return diffMinutes + " minutes ago";
+            } else {
+                return diffSeconds + " seconds ago";
+            }
+        },
         getFiveId: (id) => window._.split(id, "-", 1)[0],
     },
 });
