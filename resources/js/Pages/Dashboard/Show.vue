@@ -86,8 +86,6 @@
                             </span>
                         </div>
                         <finance />
-                        <finance />
-                        <finance />
                     </div>
                     <div class="w-[50rem]">
                         <div class="flex justify-between items-center p-3">
@@ -106,9 +104,96 @@
                                 overview
                             </span>
                         </div>
-                        <finance-overview />
-                        <finance-overview />
-                        <finance-overview />
+                        <div
+                            class="flex justify-between items-center p-3 md:rounded dark:bg-gray-900/70 hover:shadow-lg transition-shadow duration-500 bg-white border border-gray-100 dark:border-gray-900 mb-6 last:mb-0"
+                        >
+                            <div class="space-y-3">
+                                <h4 class="text-gray-500 dark:text-gray-400">
+                                    Invoice balance pending
+                                </h4>
+                                <h3 class="text-xl">
+                                    {{
+                                        setFinancialBalance(this.sum, "pending")
+                                    }}
+                                </h3>
+                            </div>
+                            <span
+                                class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-blue-600 text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    height="24"
+                                    class="inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M10 16V15H3L3 19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15H14V16H10M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V12C2 13.11 2.89 14 4 14H10V12H14V14H20C21.1 14 22 13.1 22 12V9C22 7.9 21.1 7 20 7M14 7H10V5H14V7Z"
+                                    ></path>
+                                </svg>
+                                <!---->
+                            </span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center p-3 md:rounded dark:bg-gray-900/70 hover:shadow-lg transition-shadow duration-500 bg-white border border-gray-100 dark:border-gray-900 mb-6 last:mb-0"
+                        >
+                            <div class="space-y-3">
+                                <h4 class="text-gray-500 dark:text-gray-400">
+                                    Invoice balance success
+                                </h4>
+                                <h3 class="text-xl">
+                                    {{
+                                        setFinancialBalance(this.sum, "success")
+                                    }}
+                                </h3>
+                            </div>
+                            <span
+                                class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-green-600 text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    height="24"
+                                    class="inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M10 16V15H3L3 19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15H14V16H10M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V12C2 13.11 2.89 14 4 14H10V12H14V14H20C21.1 14 22 13.1 22 12V9C22 7.9 21.1 7 20 7M14 7H10V5H14V7Z"
+                                    ></path>
+                                </svg>
+                                <!---->
+                            </span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center p-3 md:rounded dark:bg-gray-900/70 hover:shadow-lg transition-shadow duration-500 bg-white border border-gray-100 dark:border-gray-900 mb-6 last:mb-0"
+                        >
+                            <div class="space-y-3">
+                                <h4 class="text-gray-500 dark:text-gray-400">
+                                    Invoice balance failed
+                                </h4>
+                                <h3 class="text-xl">
+                                    {{
+                                        setFinancialBalance(this.sum, "failed")
+                                    }}
+                                </h3>
+                            </div>
+                            <span
+                                class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-red-600 text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    height="24"
+                                    class="inline-block"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M10 16V15H3L3 19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15H14V16H10M20 7H16V5L14 3H10L8 5V7H4C2.9 7 2 7.9 2 9V12C2 13.11 2.89 14 4 14H10V12H14V14H20C21.1 14 22 13.1 22 12V9C22 7.9 21.1 7 20 7M14 7H10V5H14V7Z"
+                                    ></path>
+                                </svg>
+                                <!---->
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -276,7 +361,6 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
 import JetSelect from "@/Jetstream/Select.vue";
 import Finance from "@/Pages/Dashboard/Partials/Finance.vue";
-import FinanceOverview from "@/Pages/Dashboard/Partials/FinanceOverview.vue";
 
 export default defineComponent({
     components: {
@@ -284,15 +368,48 @@ export default defineComponent({
         VueApexCharts,
         JetSelect,
         Finance,
-        FinanceOverview,
+    },
+    mounted() {
+        window.axios
+            .get("/api/transactions/sum")
+            .then((res) => (this.sum = res.data));
     },
     methods: {
         handleSelectChange(value) {
             this.selected = value;
         },
+        setPrice: (price) =>
+            new Intl.NumberFormat(["ban", "id"], {
+                style: "currency",
+                currency: "IDR",
+            }).format(price),
+
+        setFinancialBalance: (obj, val) =>
+            new Intl.NumberFormat(["ban", "id"], {
+                style: "currency",
+                currency: "IDR",
+            }).format(
+                window._.filter(obj, (item, key) => {
+                    if (key === val) {
+                        return item;
+                    }
+                })[0]
+            ) === "RpNaN"
+                ? "Rp 0,00"
+                : new Intl.NumberFormat(["ban", "id"], {
+                      style: "currency",
+                      currency: "IDR",
+                  }).format(
+                      window._.filter(obj, (item, key) => {
+                          if (key === val) {
+                              return item;
+                          }
+                      })[0]
+                  ),
     },
     data: () => {
         return {
+            sum: null,
             selectOption: ["Dialy", "Monthly", "Yearly"],
             selected: "Yearly",
             series: [

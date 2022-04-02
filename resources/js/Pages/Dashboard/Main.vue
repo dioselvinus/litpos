@@ -24,7 +24,7 @@
                 class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12 h-96 flex items-center"
             >
                 <h1 class="text-2xl font-bold text-center">
-                    403 | Kamu harus menghubungi manager atau admin agar
+                    403 | Kamu harus menghubungi admin agar
                     diberikan wewenang.
                 </h1>
             </div>

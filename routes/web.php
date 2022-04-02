@@ -138,7 +138,11 @@ Route::prefix('api')->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
         Route::get('/transactions/hot', function () {
-            return Transaction::latest()->limit(5)->get();
+            return Transaction::latest()->limit(5)->with('user')->get()->toArray();
+        });
+        Route::get('/transactions/sum', function () {
+
+            return ['success' => Transaction::where('status', 'success')->sum('total'), 'failed' => Transaction::where('status', 'failed')->sum('total'), 'pending' => Transaction::where('status', 'pending')->sum('total')];
         });
         Route::post('/transactions/new', function (Request $request) {
             if (!session('qr_transaction')) {
