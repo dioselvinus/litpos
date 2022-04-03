@@ -124,6 +124,7 @@ export default defineComponent({
             .then((response) => {
                 this.qrstring = `${process.env.MIX_APP_URL}api/transactions/${response.data.external_id}/pay`;
                 this.qrid = response.data.external_id;
+                clearInterval(interval);
                 let check = () =>
                     window.axios
                         .post(

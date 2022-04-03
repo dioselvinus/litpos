@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->enum('order', ['dine-in', 'take-away']);
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->string('subtotal');
             $table->string('ppn');
             $table->string('total');
+            $table->string('payment_method');
             $table->enum('status', ['pending', 'success', 'failed']);
             $table->timestamps();
         });

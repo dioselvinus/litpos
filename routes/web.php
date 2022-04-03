@@ -239,8 +239,8 @@ Route::prefix('api')->group(function () {
             return ['success' => Transaction::where('status', 'success')->sum('total'), 'failed' => Transaction::where('status', 'failed')->sum('total'), 'pending' => Transaction::where('status', 'pending')->sum('total')];
         });
         Route::post('/transactions/new', function (Request $request) {
+            $service = new Service();
             if (!session('qr_transaction')) {
-                $service = new Service();
                 session(['qr_transaction' => $service->createQRCode(['amount' => $request->amount])]);
             }
             try {
@@ -254,6 +254,20 @@ Route::prefix('api')->group(function () {
                 ]);
             } catch (\Exception$e) {
                 if ($e->getCode() == 23000) {
+                    $id = session('qr_transaction')['external_id'];
+                    session()->forget('qr_transaction');
+                    session(['qr_transaction' => $service->createQRCode(['amount' => $request->amount])]);
+                    // delete transactionProduct by transaction id
+                    TransactionProduct::where('transaction_id', $id)->delete();
+                    Transaction::find($id)->update(['id' => session('qr_transaction')['external_id'], 'user_id' => $request->user()->id, 'subtotal' => $request->amount, 'ppn' => ceil($request->amount * 0.1), 'total' => $request->amount + ceil($request->amount * 0.1), 'status' => 'pending']);
+                    foreach (array_values($request->basket) as $item) {
+                        TransactionProduct::insert([
+                            'id' => Uuid::uuid4()->toString(),
+                            'transaction_id' => session('qr_transaction')['external_id'],
+                            'product_id' => $item['product']['id'],
+                            'quantity' => $item['quantity'],
+                        ]);
+                    }
                     return session('qr_transaction');
                 }
             }

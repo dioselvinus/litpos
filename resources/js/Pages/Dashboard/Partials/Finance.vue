@@ -50,7 +50,7 @@
                                         <b>{{
                                             getDiffTime(value.created_at)
                                         }}</b>
-                                        via {{ value.payment ?? "QRIS" }} -
+                                        via {{ value.payment_method ?? "QRIS" }} -
                                         {{ value.user.name }}
                                     </p>
                                 </div>
