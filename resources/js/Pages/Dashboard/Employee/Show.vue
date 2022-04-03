@@ -53,7 +53,10 @@
                 <div
                     class="py-6 sm:px-2 lg:px-4 min-w-max h-[calc(100vh-4rem)] flex flex-col justify-between"
                 >
-                    <jet-select v-bind:options="options"></jet-select>
+                    <jet-select
+                        :options="options"
+                        @change="updateChange($event)"
+                    ></jet-select>
                     <div
                         class="mt-3 mb-2 overflow-auto overflow_menu w-[20rem] h-screen"
                     >
@@ -61,7 +64,8 @@
                     </div>
                     <Link :href="route('transactions')">
                         <jet-button class="w-full !p-4">
-                            Charge {{ setPrice(priceAll + Math.ceil(priceAll * 0.1)) }}
+                            Charge
+                            {{ setPrice(priceAll + Math.ceil(priceAll * 0.1)) }}
                         </jet-button>
                     </Link>
                 </div>
@@ -107,12 +111,18 @@ export default defineComponent({
         };
     },
     mounted: function () {
+        window.sessionStorage.setItem("optionsBasket", "dine-in");
         this.updateTime();
         setInterval(this.updateTime, 1000);
         this.getChargePrice();
         setInterval(this.getChargePrice, 500);
     },
     methods: {
+        updateChange: (value) =>
+            window.sessionStorage.setItem(
+                "optionsBasket",
+                window._.kebabCase(value)
+            ),
         getChargePrice: function () {
             let basket = window.sessionStorage.getItem("basket")
                 ? JSON.parse(window.sessionStorage.getItem("basket"))

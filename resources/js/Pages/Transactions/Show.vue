@@ -45,26 +45,74 @@
                         <p>
                             {{ setPrice(priceAll + Math.ceil(priceAll * 0.1)) }}
                         </p>
+                        <p class="text-xl inline-flex items-center">Bayar:</p>
+                        <jet-input
+                            type="number"
+                            :value="value"
+                            v-model="value"
+                        />
+                        <p class="text-xl inline-flex items-center">
+                            kembalian:
+                        </p>
+                        <p
+                            class="text-xl inline-flex items-center"
+                            v-if="
+                                value &&
+                                value >= priceAll + Math.ceil(priceAll * 0.1)
+                            "
+                        >
+                            {{
+                                setPrice(
+                                    value -
+                                        (priceAll + Math.ceil(priceAll * 0.1))
+                                )
+                            }}
+                        </p>
                     </span>
                 </span>
-                <jet-danger-button
-                    class="gap-2 mt-10"
-                    v-on:click="canceled(qrid)"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                <div class="space-x-5">
+                    <jet-danger-button
+                        class="gap-2 mt-10"
+                        v-on:click="canceled(qrid)"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                    Cancel
-                </jet-danger-button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                        Cancel
+                    </jet-danger-button>
+                    <jet-button
+                        class="gap-2 mt-10"
+                        v-on:click="submited(qrid, value)"
+                        :disabled="
+                            value <= priceAll + Math.ceil(priceAll * 0.1)
+                                ? true
+                                : false
+                        "
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                        Submit
+                    </jet-button>
+                </div>
             </div>
         </div>
     </app-layout>
@@ -82,6 +130,7 @@ import AppLayout from "@/Layouts/AppLayoutEmployee.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetDangerButton from "@/Jetstream/DangerButton.vue";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetButton from "@/Jetstream/Button.vue";
 import JetSelect from "@/Jetstream/Select.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 export default defineComponent({
@@ -89,6 +138,7 @@ export default defineComponent({
         AppLayout,
         JetInput,
         JetSecondaryButton,
+        JetButton,
         JetSelect,
         JetDangerButton,
         Head,
@@ -100,6 +150,7 @@ export default defineComponent({
             priceAll: 0,
             qrstring: "",
             qrid: "",
+            value: "",
         };
     },
     mounted() {
@@ -119,6 +170,7 @@ export default defineComponent({
         window.axios
             .post("/api/transactions/new", {
                 basket: basket,
+                order: window.sessionStorage.getItem("optionsBasket"),
                 amount: this.priceAll + Math.ceil(this.priceAll * 0.1),
             })
             .then((response) => {
@@ -146,6 +198,17 @@ export default defineComponent({
                 window.sessionStorage.removeItem("basket");
                 window.location.href = "/";
             });
+        },
+
+        submited: (id, cash_amount) => {
+            window.axios
+                .post(`/api/transactions/${id}/submit`, {
+                    cash_amount: cash_amount,
+                })
+                .then((res) => {
+                    window.sessionStorage.removeItem("basket");
+                    window.location.href = "/";
+                });
         },
 
         setPrice: (price) =>

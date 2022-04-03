@@ -17,10 +17,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->enum('order', ['dine-in', 'take-away']);
             $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->string('subtotal');
-            $table->string('ppn');
-            $table->string('total');
-            $table->string('payment_method');
+            $table->integer('subtotal');
+            $table->integer('ppn');
+            $table->integer('total');
+            $table->enum('payment_method', ['cash', 'qris'])->default('qris');
+            $table->integer('cash_amount')->nullable();
+            $table->integer('cash_change')->nullable();
             $table->enum('status', ['pending', 'success', 'failed']);
             $table->timestamps();
         });

@@ -22,6 +22,9 @@ class Transaction extends Model
         'ppn',
         'total',
         'status',
+        'cash_amount',
+        'cash_change',
+        'payment_method',
     ];
 
     /**

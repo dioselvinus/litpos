@@ -160,55 +160,10 @@ Route::prefix('api')->group(function () {
     })->name('transactions.pay');
 
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
-        Route::get('/sales', function () {
-            // transaction success in this year and save to array 12 months
-            $transactions = Transaction::whereYear('created_at', Carbon\Carbon::now()->year)->where('status', 'success')->get();
-            $months = [];
-            for ($i = 1; $i <= 12; $i++) {
-                $months[$i] = 0;
-            }
-            foreach ($transactions as $transaction) {
-                $months[$transaction->created_at->month] += $transaction->total;
-            }
-            $sum = 'Rp ' . number_format(array_sum($months), 2, ',', '.');
 
-            return [
-                'sales' => [['name' => "Sales", 'data' => array_values($months)]],
-                'sum' => $sum,
-            ];
-        });
-        Route::get('card/user', function () {
-            // transaction success in this year and save to array 12 months
-            $transactions = User::whereYear('created_at', Carbon\Carbon::now()->year)->get();
-            $months = [];
-            for ($i = 1; $i <= 12; $i++) {
-                $months[$i] = 0;
-            }
-            foreach ($transactions as $transaction) {
-                $months[$transaction->created_at->month] += 1;
-            }
+        /** api for dashboard */
 
-            return [
-                'data' => [['name' => "User", 'data' => array_values($months)]],
-                'title' => $transactions->count() . ' Users',
-            ];
-        });
-        Route::get('card/produk', function () {
-            // transaction success in this year and save to array 12 months
-            $transactions = Product::whereYear('created_at', Carbon\Carbon::now()->year)->get();
-            $months = [];
-            for ($i = 1; $i <= 12; $i++) {
-                $months[$i] = 0;
-            }
-            foreach ($transactions as $transaction) {
-                $months[$transaction->created_at->month] += 1;
-            }
-
-            return [
-                'data' => [['name' => "Product", 'data' => array_values($months)]],
-                'title' => $transactions->count() . ' Product',
-            ];
-        });
+        // table with apex chart
         Route::get('/sales/user', function () {
             // get employee with sales in this year
             $employees = User::whereYear('created_at', Carbon\Carbon::now()->year)->role('employee')->with('transactions')->get();
@@ -232,12 +187,68 @@ Route::prefix('api')->group(function () {
             }
             return $employees;
         });
+        // apex chart
+        Route::get('/sales', function () {
+            $transactions = Transaction::whereYear('created_at', Carbon\Carbon::now()->year)->where('status', 'success')->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += $transaction->total;
+            }
+            $sum = 'Rp ' . number_format(array_sum($months), 2, ',', '.');
+
+            return [
+                'sales' => [['name' => "Sales", 'data' => array_values($months)]],
+                'sum' => $sum,
+            ];
+        });
+        // apex chart
+        Route::get('card/user', function () {
+            // transaction success in this year and save to array 12 months
+            $transactions = User::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += 1;
+            }
+
+            return [
+                'data' => [['name' => "User", 'data' => array_values($months)]],
+                'title' => $transactions->count() . ' Users',
+            ];
+        });
+        // apex chart
+        Route::get('card/produk', function () {
+            // transaction success in this year and save to array 12 months
+            $transactions = Product::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += 1;
+            }
+
+            return [
+                'data' => [['name' => "Product", 'data' => array_values($months)]],
+                'title' => $transactions->count() . ' Product',
+            ];
+        });
+        // financial
         Route::get('/transactions/hot', function () {
             return Transaction::latest()->limit(5)->with('user')->get()->toArray();
         });
+        // financial overview
         Route::get('/transactions/sum', function () {
             return ['success' => Transaction::where('status', 'success')->sum('total'), 'failed' => Transaction::where('status', 'failed')->sum('total'), 'pending' => Transaction::where('status', 'pending')->sum('total')];
         });
+        /* end api for dashboard */
+
+        // create transaction
         Route::post('/transactions/new', function (Request $request) {
             $service = new Service();
             if (!session('qr_transaction')) {
@@ -250,6 +261,7 @@ Route::prefix('api')->group(function () {
                     'subtotal' => $request->amount,
                     'ppn' => ceil($request->amount * 0.1),
                     'total' => $request->amount + ceil($request->amount * 0.1),
+                    'order' => $request->order,
                     'status' => 'pending',
                 ]);
             } catch (\Exception$e) {
@@ -259,7 +271,7 @@ Route::prefix('api')->group(function () {
                     session(['qr_transaction' => $service->createQRCode(['amount' => $request->amount])]);
                     // delete transactionProduct by transaction id
                     TransactionProduct::where('transaction_id', $id)->delete();
-                    Transaction::find($id)->update(['id' => session('qr_transaction')['external_id'], 'user_id' => $request->user()->id, 'subtotal' => $request->amount, 'ppn' => ceil($request->amount * 0.1), 'total' => $request->amount + ceil($request->amount * 0.1), 'status' => 'pending']);
+                    Transaction::find($id)->update(['id' => session('qr_transaction')['external_id'], 'user_id' => $request->user()->id, 'subtotal' => $request->amount, 'ppn' => ceil($request->amount * 0.1), 'total' => $request->amount + ceil($request->amount * 0.1), 'status' => 'pending', 'order' => $request->order]);
                     foreach (array_values($request->basket) as $item) {
                         TransactionProduct::insert([
                             'id' => Uuid::uuid4()->toString(),
@@ -282,12 +294,25 @@ Route::prefix('api')->group(function () {
             return session('qr_transaction');
         })->name('transactions.new');
 
+        // transactions update qrcode
         Route::post('/transactions/{transaction}/check', function (Transaction $transaction) {
             if ($transaction->status == 'success') {
                 session()->forget('qr_transaction');
             }
             return $transaction->status;
         })->name('transactions.show');
+        // transactions submit cash
+        Route::post('/transactions/{transaction}/submit', function (Transaction $transaction, Request $request) {
+            $transaction->update([
+                'status' => 'success',
+                'cash_amount' => $request->cash_amount,
+                'cash_change' => $request->cash_amount - $transaction->total,
+                'payment_method' => 'cash',
+            ]);
+            session()->forget('qr_transaction');
+            return $transaction;
+        })->name('transactions.submit');
+        // transactions canceled
         Route::post('/transactions/{transaction}/cancel', function (Transaction $transaction) {
             $transaction->status = 'failed';
             $transaction->save();
@@ -295,6 +320,7 @@ Route::prefix('api')->group(function () {
             return $transaction;
         })->name('transactions.cancel');
 
+        // table history
         Route::get('/transactions', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
                 $transaction = Transaction::latest()->where('status', 'like', '%' . $request->query('search') . '%')->orWhere('id', 'like', '%' . $request->query('search') . '%')->with('user');
@@ -310,6 +336,7 @@ Route::prefix('api')->group(function () {
             }
         });
         Route::apiResource('products', ProductController::class);
+        // get user only role employee
         Route::get('/employee', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
                 $user = User::where('name', 'like', '%' . $request->query('search') . '%')->orWhere('email', 'like', '%' . $request->query('search') . '%')->role('employee');
@@ -324,7 +351,7 @@ Route::prefix('api')->group(function () {
                 );
             }
         });
-
+        // get user had roles
         Route::get('/user', function (Request $request) {
             if (empty($request->all())) {
                 return response()->json(User::with('roles')->role(['employee', 'manager'])->get());
@@ -342,13 +369,17 @@ Route::prefix('api')->group(function () {
                 );
             }
         });
+        // delete user
         Route::delete('/user/{user}', function (User $user) {
             $user->delete();
         });
+        // change role user
         Route::put('/user/{user}', function (Request $request, User $user) {
             $user->removeRole($user->roles->first());
             $user->assignRole(Str::lower($request->roles));
         })->name('user.update');
+
+        // table registered user
         Route::get('/user/new', function (Request $request) {
             if (empty($request->all())) {
                 return response()->json(User::with('roles')->role(['user'])->get());
