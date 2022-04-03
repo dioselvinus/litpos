@@ -50,7 +50,7 @@
             >
                 <div class="inline-flex" role="group">
                     <jet-nav-link
-                        :href="route('user.pdf')"
+                        :href="route('history.pdf')"
                         class="hover:!border-transparent focus:!border-transparent !p-0"
                     >
                         <jet-secondary-button
@@ -86,11 +86,11 @@
                                 Download As
                             </div>
 
-                            <jet-dropdown-link :href="route('user.pdf')" as="a">
+                            <jet-dropdown-link :href="route('history.pdf')" as="a">
                                 PDF
                             </jet-dropdown-link>
                             <jet-dropdown-link
-                                :href="route('user.excel')"
+                                :href="route('history.excel')"
                                 as="a"
                             >
                                 EXCEL

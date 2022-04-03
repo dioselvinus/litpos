@@ -47,9 +47,26 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
     });
 
     Route::middleware(['auth:sanctum', 'verified', 'role:employee|manager|admin'])->group(function () {
-        Route::get('/history', function () {
-            return Inertia::render('History/Show');
-        })->name('history');
+        Route::prefix('/history')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('History/Show');
+            })->name('history');
+            Route::get('/pdf', function () {
+                return PDF::loadView('pdf.table.history', ['transaction' => Transaction::latest()->with('user')->get()])->download(Carbon\Carbon::now() . '_History.pdf');
+            })->name('history.pdf');
+            Route::get('/excel', function () {
+                $collection = Transaction::latest()->with('user')->get()->toArray();
+                $excel = SimpleExcelWriter::streamDownload(Carbon\Carbon::now() . '_History.xlsx');
+                foreach ($collection as $row) {
+                    unset($row['user_id']);
+                    if (isset($row['user'])) {
+                        $row['user'] = $row['user']['name'];
+                    }
+                    $excel->addRow($row);
+                }
+                return $excel->toBrowser();
+            })->name('history.excel');
+        });
     });
 
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {

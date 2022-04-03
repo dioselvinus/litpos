@@ -124,7 +124,7 @@
 
 <body>
     <header>
-        <h1>Table User Cashier</h1>
+        <h1>Table Product</h1>
         <h2>
             Date: {{ Carbon\Carbon::now()->toDateString() }}
         </h2>
