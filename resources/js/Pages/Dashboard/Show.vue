@@ -33,11 +33,11 @@
                         </svg>
                         Overview
                     </span>
-                    <jet-select
+                    <!-- <jet-select
                         v-bind:options="selectOption"
                         @change="handleSelectChange"
                         class="w-36"
-                    ></jet-select>
+                    ></jet-select> -->
                 </div>
                 <div class="flex justify-between gap-4">
                     <div class="min-w-min w-96 bg-white shadow rounded">
@@ -59,10 +59,13 @@
                         ></vue-apex-charts>
                     </div>
                     <div class="min-w-min w-96 bg-white shadow rounded">
-                        <vue-apex-charts
-                            :options="chartOptions"
-                            :series="series"
-                        ></vue-apex-charts>
+                        <!-- :data="getFilter(this.sales, 'sales')" -->
+                        <apex-line
+                            :data="getFilter(this.sales, 'sales')"
+                            :titles="getFilter(this.sales, 'sum')"
+                            :subtitles="'Sales in last month'"
+                        ></apex-line>
+                        <!-- {{ getFilter(this.sales, "sales") }} -->
                     </div>
                 </div>
             </div>
@@ -361,6 +364,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
 import JetSelect from "@/Jetstream/Select.vue";
 import Finance from "@/Pages/Dashboard/Partials/Finance.vue";
+import ApexLine from "@/Pages/Dashboard/Partials/ApexLine.vue";
 
 export default defineComponent({
     components: {
@@ -368,11 +372,15 @@ export default defineComponent({
         VueApexCharts,
         JetSelect,
         Finance,
+        ApexLine,
     },
     mounted() {
         window.axios
             .get("/api/transactions/sum")
             .then((res) => (this.sum = res.data));
+        window.axios.get("/api/sales").then((res) => {
+            this.sales = res.data;
+        });
     },
     methods: {
         handleSelectChange(value) {
@@ -383,7 +391,14 @@ export default defineComponent({
                 style: "currency",
                 currency: "IDR",
             }).format(price),
-
+        getFilter: (obj, val) =>
+            window._.cloneDeep(
+                window._.filter(obj, (item, key) => {
+                    if (key === val) {
+                        return item;
+                    }
+                })[0]
+            ),
         setFinancialBalance: (obj, val) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",
@@ -410,6 +425,15 @@ export default defineComponent({
     data: () => {
         return {
             sum: null,
+            sales: {
+                sales: [
+                    {
+                        name: "Desktops",
+                        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+                    },
+                ],
+                num: 0,
+            },
             selectOption: ["Dialy", "Monthly", "Yearly"],
             selected: "Yearly",
             series: [

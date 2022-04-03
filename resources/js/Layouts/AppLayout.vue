@@ -69,6 +69,19 @@
                                 >
                                     Produk
                                 </jet-nav-link>
+                                <jet-nav-link
+                                    :href="route('history')"
+                                    :active="
+                                        route().current('history')
+                                    "
+                                    v-if="
+                                        $page.props.user.roles &&
+                                        $page.props.user.roles[0].name !==
+                                            'user'
+                                    "
+                                >
+                                    Transactions History
+                                </jet-nav-link>
                             </div>
                         </div>
 

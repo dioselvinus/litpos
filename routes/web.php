@@ -46,6 +46,12 @@ Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin|employee|user
         })->name('kitchen');
     });
 
+    Route::middleware(['auth:sanctum', 'verified', 'role:employee|manager|admin'])->group(function () {
+        Route::get('/history', function () {
+            return Inertia::render('History/Show');
+        })->name('history');
+    });
+
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|admin'])->group(function () {
 
         Route::prefix('/employee')->group(function () {
@@ -137,11 +143,31 @@ Route::prefix('api')->group(function () {
     })->name('transactions.pay');
 
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
+        Route::get('/sales', function () {
+            // transaction success in this year and save to array 12 months
+            $transactions = Transaction::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += $transaction->total;
+            }
+            $sum = 'Rp ' . number_format(array_sum($months), 2, ',', '.');
+
+            foreach ($months as $key => $month) {
+                $months[$key] = 'Rp ' . number_format($month, 2, ',', '.');
+            }
+
+            return [
+                'sales' => [['name' => 'Sale', 'data' => array_values($months)]],
+                'sum' => $sum,
+            ];
+        });
         Route::get('/transactions/hot', function () {
             return Transaction::latest()->limit(5)->with('user')->get()->toArray();
         });
         Route::get('/transactions/sum', function () {
-
             return ['success' => Transaction::where('status', 'success')->sum('total'), 'failed' => Transaction::where('status', 'failed')->sum('total'), 'pending' => Transaction::where('status', 'pending')->sum('total')];
         });
         Route::post('/transactions/new', function (Request $request) {
@@ -187,6 +213,20 @@ Route::prefix('api')->group(function () {
             return $transaction;
         })->name('transactions.cancel');
 
+        Route::get('/transactions', function (Request $request) {
+            if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
+                $transaction = Transaction::latest()->where('status', 'like', '%' . $request->query('search') . '%')->orWhere('id', 'like', '%' . $request->query('search') . '%')->with('user');
+                $count = $transaction->count();
+                $transactionGet = $transaction->skip($request->query('page') * $request->query('size'))->take($request->query('size'))->get();
+                return response()->json(
+                    [
+                        'totalTransaction' => $count,
+                        'totalPages' => ceil($count / $request->query('size')),
+                        'data' => $transactionGet,
+                    ]
+                );
+            }
+        });
         Route::apiResource('products', ProductController::class);
         Route::get('/employee', function (Request $request) {
             if ($request->query('search') || $request->query('size') >= 0 && $request->query('page') >= 0) {
