@@ -47,6 +47,20 @@
                             subtitle="Sales in last month"
                         ></apex-line>
                     </div>
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <apex-line
+                            :series="getFilter(user, 'data')"
+                            :title="getFilter(user, 'title')"
+                            subtitle="User register in last month"
+                        ></apex-line>
+                    </div>
+                    <div class="min-w-min w-96 bg-white shadow rounded">
+                        <apex-line
+                            :series="getFilter(product, 'data')"
+                            :title="getFilter(product, 'title')"
+                            subtitle="Product created in last month"
+                        ></apex-line>
+                    </div>
                 </div>
             </div>
             <div class="pt-36">
@@ -361,6 +375,12 @@ export default defineComponent({
         window.axios.get("/api/sales").then((res) => {
             this.sales = res.data;
         });
+        window.axios.get("/api/card/user").then((res) => {
+            this.user = res.data;
+        });
+        window.axios.get("/api/card/produk").then((res) => {
+            this.product = res.data;
+        });
     },
     methods: {
         handleSelectChange(value) {
@@ -404,6 +424,8 @@ export default defineComponent({
         return {
             sum: null,
             sales: {},
+            user: {},
+            product: {},
             // selectOption: ["Dialy", "Monthly", "Yearly"],
             // selected: "Yearly",
         };

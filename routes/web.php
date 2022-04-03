@@ -162,7 +162,7 @@ Route::prefix('api')->group(function () {
     Route::middleware(['auth:sanctum', 'verified', 'role:manager|employee|admin'])->group(function () {
         Route::get('/sales', function () {
             // transaction success in this year and save to array 12 months
-            $transactions = Transaction::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $transactions = Transaction::whereYear('created_at', Carbon\Carbon::now()->year)->where('status', 'success')->get();
             $months = [];
             for ($i = 1; $i <= 12; $i++) {
                 $months[$i] = 0;
@@ -175,6 +175,38 @@ Route::prefix('api')->group(function () {
             return [
                 'sales' => [['name' => "Sales", 'data' => array_values($months)]],
                 'sum' => $sum,
+            ];
+        });
+        Route::get('card/user', function () {
+            // transaction success in this year and save to array 12 months
+            $transactions = User::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += 1;
+            }
+
+            return [
+                'data' => [['name' => "User", 'data' => array_values($months)]],
+                'title' => $transactions->count() . ' Users',
+            ];
+        });
+        Route::get('card/produk', function () {
+            // transaction success in this year and save to array 12 months
+            $transactions = Product::whereYear('created_at', Carbon\Carbon::now()->year)->get();
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = 0;
+            }
+            foreach ($transactions as $transaction) {
+                $months[$transaction->created_at->month] += 1;
+            }
+
+            return [
+                'data' => [['name' => "Product", 'data' => array_values($months)]],
+                'title' => $transactions->count() . ' Product',
             ];
         });
         Route::get('/transactions/hot', function () {
