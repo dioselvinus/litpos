@@ -10,9 +10,11 @@
         <template #thead>
             <table-head>id</table-head>
             <table-head>Employee</table-head>
+            <table-head>Order</table-head>
+            <table-head>Amount</table-head>
+            <table-head>Payment</table-head>
             <table-head>Status</table-head>
             <table-head>Created At</table-head>
-            <table-head>Updated At</table-head>
         </template>
 
         <template #tbody="{ row }">
@@ -31,6 +33,10 @@
                     {{ row.user.name }}
                 </div>
             </table-body>
+            <table-body v-text="titleCase(row.order)" />
+            <table-body v-text="row.cash_amount" />
+            <table-body v-text="row.payment_method" />
+
             <table-body>
                 <span
                     :class="[
@@ -47,9 +53,6 @@
 
             <table-body>
                 {{ new Date(row.created_at).toISOString().substring(0, 10) }}
-            </table-body>
-            <table-body>
-                {{ new Date(row.updated_at).toISOString().substring(0, 10) }}
             </table-body>
         </template>
     </data-table>
@@ -137,6 +140,7 @@ export default defineComponent({
                     );
                 });
         };
+        const titleCase = (str) => window._.startCase(str);
 
         return {
             tableData,
@@ -146,6 +150,7 @@ export default defineComponent({
             deleteUser,
             isLoading,
             updateChangeRole,
+            titleCase,
         };
     },
 });
