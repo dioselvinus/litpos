@@ -172,12 +172,8 @@ Route::prefix('api')->group(function () {
             }
             $sum = 'Rp ' . number_format(array_sum($months), 2, ',', '.');
 
-            foreach ($months as $key => $month) {
-                $months[$key] = 'Rp ' . number_format($month, 2, ',', '.');
-            }
-
             return [
-                'sales' => [['name' => 'Sale', 'data' => array_values($months)]],
+                'sales' => [['name' => "Sales", 'data' => array_values($months)]],
                 'sum' => $sum,
             ];
         });

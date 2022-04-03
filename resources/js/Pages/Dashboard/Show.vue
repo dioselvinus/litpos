@@ -41,31 +41,11 @@
                 </div>
                 <div class="flex justify-between gap-4">
                     <div class="min-w-min w-96 bg-white shadow rounded">
-                        <vue-apex-charts
-                            :options="chartOptions"
-                            :series="series"
-                        ></vue-apex-charts>
-                    </div>
-                    <div class="min-w-min w-96 bg-white shadow rounded">
-                        <vue-apex-charts
-                            :options="chartOptions"
-                            :series="series"
-                        ></vue-apex-charts>
-                    </div>
-                    <div class="min-w-min w-96 bg-white shadow rounded">
-                        <vue-apex-charts
-                            :options="chartOptions"
-                            :series="series"
-                        ></vue-apex-charts>
-                    </div>
-                    <div class="min-w-min w-96 bg-white shadow rounded">
-                        <!-- :data="getFilter(this.sales, 'sales')" -->
                         <apex-line
-                            :data="getFilter(this.sales, 'sales')"
-                            :titles="getFilter(this.sales, 'sum')"
-                            :subtitles="'Sales in last month'"
+                            :series="getFilter(sales, 'sales')"
+                            :title="getFilter(sales, 'sum')"
+                            subtitle="Sales in last month"
                         ></apex-line>
-                        <!-- {{ getFilter(this.sales, "sales") }} -->
                     </div>
                 </div>
             </div>
@@ -392,13 +372,11 @@ export default defineComponent({
                 currency: "IDR",
             }).format(price),
         getFilter: (obj, val) =>
-            window._.cloneDeep(
-                window._.filter(obj, (item, key) => {
-                    if (key === val) {
-                        return item;
-                    }
-                })[0]
-            ),
+            window._.filter(obj, (item, key) => {
+                if (key === val) {
+                    return item;
+                }
+            })[0],
         setFinancialBalance: (obj, val) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",
@@ -425,101 +403,9 @@ export default defineComponent({
     data: () => {
         return {
             sum: null,
-            sales: {
-                sales: [
-                    {
-                        name: "Desktops",
-                        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-                    },
-                ],
-                num: 0,
-            },
-            selectOption: ["Dialy", "Monthly", "Yearly"],
-            selected: "Yearly",
-            series: [
-                {
-                    name: "Desktops",
-                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-                },
-            ],
-
-            chartOptions: {
-                legend: {
-                    show: false,
-                },
-                grid: {
-                    show: false,
-                    padding: {
-                        right: 0,
-                        left: 0,
-                    },
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                chart: {
-                    type: "area",
-                    zoom: {
-                        enabled: false,
-                    },
-                    sparkline: {
-                        enabled: true,
-                    },
-                },
-
-                stroke: {
-                    curve: "smooth",
-                },
-
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        shadeIntensity: 0.9,
-                        opacityFrom: 0.7,
-                        opacityTo: 0.5,
-                        stops: [0, 95, 100],
-                    },
-                },
-
-                xaxis: {
-                    categories: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                    ],
-                },
-            },
-        };
-    },
-    created() {
-        this.chartOptions["title"] = {
-            text: "$1,000",
-            align: "left",
-            offsetX: 20,
-            offsetY: 10,
-            style: {
-                fontSize: "24px",
-                fontWeight: "bold",
-            },
-        };
-        this.chartOptions["subtitle"] = {
-            text: `${this.selected} sales`,
-            align: "left",
-            offsetX: 20,
-            offsetY: 40,
-            style: {
-                fontSize: "14px",
-                color: "#666",
-            },
+            sales: {},
+            // selectOption: ["Dialy", "Monthly", "Yearly"],
+            // selected: "Yearly",
         };
     },
 });

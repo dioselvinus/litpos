@@ -8,7 +8,26 @@ export default defineComponent({
     components: {
         VueApexCharts,
     },
-    props: ["data", "title", "subtitle"],
+    props: {
+        series: {
+            type: Array,
+            default: () => [
+                {
+                    name: "name",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                },
+            ],
+        },
+        subtitle: {
+            type: String,
+            default: "ApexCharts",
+        },
+        title: {
+            type: String,
+            default: "Rp 0,00",
+        },
+    },
+
     data() {
         return {
             chartOptions: {
@@ -25,6 +44,7 @@ export default defineComponent({
                 dataLabels: {
                     enabled: false,
                 },
+
                 chart: {
                     type: "area",
                     zoom: {
@@ -49,6 +69,27 @@ export default defineComponent({
                     },
                 },
 
+                title: {
+                    text: "Rp. 0,00",
+                    align: "left",
+                    offsetX: 20,
+                    offsetY: 10,
+                    style: {
+                        fontSize: "24px",
+                        fontWeight: "bold",
+                    },
+                },
+                subtitle: {
+                    text: "Apexcharts",
+                    align: "left",
+                    offsetX: 20,
+                    offsetY: 40,
+                    style: {
+                        fontSize: "14px",
+                        color: "#666",
+                    },
+                },
+
                 xaxis: {
                     categories: [
                         "Jan",
@@ -68,27 +109,35 @@ export default defineComponent({
             },
         };
     },
-    created() {
-        this.chartOptions["title"] = {
-            text: this.title,
-            align: "left",
-            offsetX: 20,
-            offsetY: 10,
-            style: {
-                fontSize: "24px",
-                fontWeight: "bold",
-            },
-        };
-        this.chartOptions["subtitle"] = {
-            text: this.subtitle,
-            align: "left",
-            offsetX: 20,
-            offsetY: 40,
-            style: {
-                fontSize: "14px",
-                color: "#666",
-            },
-        };
+    watch: {
+        title(newTitle, oldTitle) {
+            this.chartOptions = {
+                ...this.chartOptions,
+                ...{
+                    title: {
+                        text: newTitle,
+                        align: "left",
+                        offsetX: 20,
+                        offsetY: 10,
+                        style: {
+                            fontSize: "24px",
+                            fontWeight: "bold",
+                        },
+                    },
+
+                    subtitle: {
+                        text: this.subtitle,
+                        align: "left",
+                        offsetX: 20,
+                        offsetY: 40,
+                        style: {
+                            fontSize: "14px",
+                            color: "#666",
+                        },
+                    },
+                },
+            };
+        },
     },
 });
 </script>
