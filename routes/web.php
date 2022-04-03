@@ -209,6 +209,29 @@ Route::prefix('api')->group(function () {
                 'title' => $transactions->count() . ' Product',
             ];
         });
+        Route::get('/sales/user', function () {
+            // get employee with sales in this year
+            $employees = User::whereYear('created_at', Carbon\Carbon::now()->year)->role('employee')->with('transactions')->get();
+            foreach ($employees as $employee) {
+                $months = [];
+                for ($i = 1; $i <= 12; $i++) {
+                    $months[$i] = 0;
+                }
+                $sum = 0;
+                foreach ($employees as $employee) {
+                    $months[$employee->created_at->month] += $employee->transactions->where('status', 'success')->count();
+                    foreach ($employee->transactions->where('status', 'success') as $transaction) {
+                        $sum += $transaction->total;
+                    }
+                }
+
+                $employee->transaction = [
+                    'data' => [['name' => "Transaction", 'data' => array_values($months)]],
+                    'sum' => 'Rp ' . number_format($sum, 2, ',', '.'),
+                ];
+            }
+            return $employees;
+        });
         Route::get('/transactions/hot', function () {
             return Transaction::latest()->limit(5)->with('user')->get()->toArray();
         });

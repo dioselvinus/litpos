@@ -239,6 +239,8 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
+                                        v-for="employee in employees"
+                                        :key="employee.id"
                                     >
                                         <tr
                                             class="hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -246,93 +248,45 @@
                                             <td
                                                 class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                             >
-                                                Apple Imac 27"
+                                                <div class="flex">
+                                                    <img
+                                                        :src="
+                                                            employee.profile_photo_path
+                                                                ? getImage(
+                                                                      employee.profile_photo_path
+                                                                  )
+                                                                : employee.profile_photo_url
+                                                        "
+                                                        class="w-8 h-8 rounded-full mr-2"
+                                                        :alt="employee.name"
+                                                    />
+                                                    <div
+                                                        class="grid grid-flow-row"
+                                                    >
+                                                        <span
+                                                            class="text-gray-800"
+                                                        >
+                                                            {{ employee.name }}
+                                                        </span>
+                                                        <span
+                                                            class="text-gray-400"
+                                                        >
+                                                            {{ employee.email }}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
                                             >
-                                                Desktop PC
+                                                <div class="w-28">
+                                                    <apex-table :series="employee.transaction.data"/>
+                                                </div>
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                             >
-                                                $1999
-                                            </td>
-                                        </tr>
-                                        <tr
-                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                                        >
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                Apple MacBook Pro 17"
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                                            >
-                                                Laptop
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                $2999
-                                            </td>
-                                        </tr>
-                                        <tr
-                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                                        >
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                iPhone 13 Pro
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                                            >
-                                                Phone
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                $999
-                                            </td>
-                                        </tr>
-                                        <tr
-                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                                        >
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                Apple Magic Mouse 2
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                                            >
-                                                Accessories
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                $99
-                                            </td>
-                                        </tr>
-                                        <tr
-                                            class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                                        >
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                Apple Watch Series 7
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                                            >
-                                                Accessories
-                                            </td>
-                                            <td
-                                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                            >
-                                                $599
+                                                {{ employee.transaction.sum }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -355,18 +309,18 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import VueApexCharts from "vue3-apexcharts";
 import JetSelect from "@/Jetstream/Select.vue";
 import Finance from "@/Pages/Dashboard/Partials/Finance.vue";
 import ApexLine from "@/Pages/Dashboard/Partials/ApexLine.vue";
+import ApexTable from "@/Pages/Dashboard/Partials/ApexTable.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
-        VueApexCharts,
         JetSelect,
         Finance,
         ApexLine,
+        ApexTable
     },
     mounted() {
         window.axios
@@ -374,6 +328,10 @@ export default defineComponent({
             .then((res) => (this.sum = res.data));
         window.axios.get("/api/sales").then((res) => {
             this.sales = res.data;
+        });
+        window.axios.get("/api/sales/user").then((res) => {
+            this.employees = res.data;
+            console.log(this.employees);
         });
         window.axios.get("/api/card/user").then((res) => {
             this.user = res.data;
@@ -397,6 +355,8 @@ export default defineComponent({
                     return item;
                 }
             })[0],
+        getImage: (url) =>
+            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
         setFinancialBalance: (obj, val) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",
@@ -426,6 +386,7 @@ export default defineComponent({
             sales: {},
             user: {},
             product: {},
+            employees: {},
             // selectOption: ["Dialy", "Monthly", "Yearly"],
             // selected: "Yearly",
         };

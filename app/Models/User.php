@@ -68,4 +68,14 @@ class User extends Authenticatable implements AuthorizableContract, MustVerifyEm
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * The transactions product relationship.
+     *
+     * @var array
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -1670,6 +1670,9 @@ input:checked + .toggle-bg {
 .w-64 {
   width: 16rem;
 }
+.w-2 {
+  width: 0.5rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1808,6 +1811,9 @@ input:checked + .toggle-bg {
 }
 .list-disc {
   list-style-type: disc;
+}
+.grid-flow-row {
+  grid-auto-flow: row;
 }
 .grid-flow-col-dense {
   grid-auto-flow: column dense;
