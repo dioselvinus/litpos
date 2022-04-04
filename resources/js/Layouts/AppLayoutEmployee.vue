@@ -23,7 +23,7 @@
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
-                                <jet-dropdown align="right" width="150">
+                                <jet-dropdown align="right" width="48">
                                     <template #trigger>
                                         <button
                                             v-if="
@@ -86,54 +86,29 @@
                                         <div
                                             class="block px-4 py-2 text-xs text-gray-400"
                                         >
-                                            Multi-Account
+                                            Manage Account
                                         </div>
 
                                         <jet-dropdown-link
                                             :href="route('profile.show')"
-                                            v-if="
-                                                $page.props.jetstream
-                                                    .managesProfilePhotos
-                                            "
                                         >
-                                            <span class="flex items-center">
-                                                <img
-                                                    class="h-8 w-8 rounded-full object-cover mr-2"
-                                                    :src="
-                                                        $page.props.user
-                                                            .profile_photo_url
-                                                    "
-                                                    :alt="$page.props.user.name"
-                                                />
-                                                <span class="truncate">
-                                                    {{ $page.props.user.name }}
-                                                </span>
-                                                <span
-                                                    v-if="$page.props.user.name"
-                                                    class="ml-8 h-4 w-4 bg-sky-400 rounded-full relative"
-                                                ></span>
-                                            </span>
+                                            Profile
                                         </jet-dropdown-link>
 
                                         <div
                                             class="border-t border-gray-100"
                                         ></div>
 
-                                        <jet-dropdown-link :href="route('kitchen')">
+                                        <!-- <jet-dropdown-link
+                                            :href="route('kitchen')"
+                                        >
                                             Kitchen
-                                        </jet-dropdown-link>
+                                        </jet-dropdown-link> -->
+
                                         <!-- Authentication -->
-                                        <form
-                                            @submit.prevent="loginMore"
-                                        ></form>
                                         <form @submit.prevent="logout">
                                             <jet-dropdown-link as="button">
                                                 Log Out
-                                            </jet-dropdown-link>
-                                        </form>
-                                        <form @submit.prevent="logoutAll">
-                                            <jet-dropdown-link as="button">
-                                                Log Out All
                                             </jet-dropdown-link>
                                         </form>
                                     </template>

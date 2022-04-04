@@ -124,20 +124,36 @@ export default defineComponent({
                             fontWeight: "bold",
                         },
                     },
-
-                    subtitle: {
-                        text: this.subtitle,
-                        align: "left",
-                        offsetX: 20,
-                        offsetY: 40,
-                        style: {
-                            fontSize: "14px",
-                            color: "#666",
-                        },
-                    },
                 },
             };
         },
+    },
+    created() {
+        this.chartOptions = {
+            ...this.chartOptions,
+            ...{
+                title: {
+                    text: this.title,
+                    align: "left",
+                    offsetX: 20,
+                    offsetY: 10,
+                    style: {
+                        fontSize: "24px",
+                        fontWeight: "bold",
+                    },
+                },
+                subtitle: {
+                    text: this.subtitle,
+                    align: "left",
+                    offsetX: 20,
+                    offsetY: 40,
+                    style: {
+                        fontSize: "14px",
+                        color: "#666",
+                    },
+                },
+            },
+        };
     },
 });
 </script>

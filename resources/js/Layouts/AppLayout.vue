@@ -71,9 +71,7 @@
                                 </jet-nav-link>
                                 <jet-nav-link
                                     :href="route('history')"
-                                    :active="
-                                        route().current('history')
-                                    "
+                                    :active="route().current('history')"
                                     v-if="
                                         $page.props.user.roles &&
                                         $page.props.user.roles[0].name !==
@@ -237,7 +235,13 @@
                                                 class="h-8 w-8 rounded-full object-cover mr-2"
                                                 :src="
                                                     $page.props.user
-                                                        .profile_photo_url
+                                                        .profile_photo_path
+                                                        ? getImage(
+                                                              $page.props.user
+                                                                  .profile_photo_path
+                                                          )
+                                                        : $page.props.user
+                                                              .profile_photo_url
                                                 "
                                                 :alt="$page.props.user.name"
                                             />
@@ -392,7 +396,14 @@
                             >
                                 <img
                                     class="h-10 w-10 rounded-full object-cover"
-                                    :src="$page.props.user.profile_photo_url"
+                                    :src="
+                                        $page.props.user.profile_photo_path
+                                            ? getImage(
+                                                  $page.props.user
+                                                      .profile_photo_path
+                                              )
+                                            : $page.props.user.profile_photo_url
+                                    "
                                     :alt="$page.props.user.name"
                                 />
                             </div>
@@ -668,6 +679,9 @@ export default defineComponent({
         logout() {
             this.$inertia.post(route("logout"));
         },
+
+        getImage: (url) =>
+            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
     },
 });
 </script>
