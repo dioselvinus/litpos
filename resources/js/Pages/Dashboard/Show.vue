@@ -331,7 +331,6 @@ export default defineComponent({
         });
         window.axios.get("/api/sales/user").then((res) => {
             this.employees = res.data;
-            console.log(this.employees);
         });
         window.axios.get("/api/card/user").then((res) => {
             this.user = res.data;
