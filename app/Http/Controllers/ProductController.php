@@ -54,7 +54,7 @@ class ProductController extends Controller
             // save to storage laravel
             $photo = $request->file('photo');
             $path = Storage::putFileAs(
-                'public/images/products', $photo, $photo->hashName()
+                'images/products', $photo, $photo->hashName()
             );
         } else if ($request->photo) {
             $path = $request->photo;
@@ -105,7 +105,7 @@ class ProductController extends Controller
             Storage::delete($product->image);
             $photo = $request->file('photo');
             $path = Storage::putFileAs(
-                'public/images/products', $request->file('photo'), $photo->hashName()
+                'images/products', $request->file('photo'), $photo->hashName()
             );
             $product->image = $path;
         } else if ($request->photo) {

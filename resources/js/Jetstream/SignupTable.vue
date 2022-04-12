@@ -97,7 +97,7 @@ export default defineComponent({
             isLoading.value = false;
         };
         const getImage = (url) =>
-            window._.replace(url, /(^public\/images)/gm, "/storage/images");
+            window._.replace(url, /(^images)/gm, "/storage/images");
 
         const updateChangeRole = (id, value) => {
             roles.value[id] = value;

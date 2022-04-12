@@ -13,6 +13,7 @@
         "fakerphp/faker": "^1.19",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.5.2",
+        "jzonta/faker-restaurant": "^2.0",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.14.1",
@@ -21,7 +22,8 @@
         "spatie/laravel-permission": "^5.5",
         "spatie/simple-excel": "^1.15",
         "tightenco/ziggy": "^1.0",
-        "xendit/xendit-php": "^2.17"
+        "xendit/xendit-php": "^2.17",
+        "xvladqt/faker-lorem-flickr": "^1.0"
     },
     "require-dev": {
         "laravel/sail": "^1.0.1",

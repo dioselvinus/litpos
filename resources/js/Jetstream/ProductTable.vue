@@ -94,7 +94,7 @@ export default defineComponent({
             };
             isLoading.value = false;
         };
-        const getImage = (url) => window._.replace(url, /(^public\/images)/gm, "/storage/images");
+        const getImage = (url) => window._.replace(url, /(^images)/gm, "/storage/images");
         const setPrice = (price) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",

@@ -48,7 +48,7 @@ export default defineComponent({
     },
     methods: {
         getImage: (url) =>
-            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
+            window._.replace(url, /(^images)/gm, "/storage/images"),
         setPrice: (price) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",

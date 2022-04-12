@@ -276,7 +276,7 @@ export default defineComponent({
             this.$inertia.post(route("logout"));
         },
         getImage: (url) =>
-            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
+            window._.replace(url, /(^images)/gm, "/storage/images"),
     },
 });
 </script>

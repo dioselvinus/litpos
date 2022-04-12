@@ -355,7 +355,7 @@ export default defineComponent({
                 }
             })[0],
         getImage: (url) =>
-            window._.replace(url, /(^public\/images)/gm, "/storage/images"),
+            window._.replace(url, /(^images)/gm, "/storage/images"),
         setFinancialBalance: (obj, val) =>
             new Intl.NumberFormat(["ban", "id"], {
                 style: "currency",
